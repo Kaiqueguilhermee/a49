@@ -910,19 +910,22 @@ a, a:hover {
     }
     .d-steam-card-wrapper {
         flex-basis: 25%;
+        max-height: 120px !important;
     }
     .hidden-mobile{
         display: none;
     }
     .d-steam-card {
         padding: 0 0 30% 0 !important;
+        max-height: 120px !important;
+        height: 120px !important;
     }
 }
 
 .d-steam-card {
     padding: 0 0 70% 0;
     background: url(style.css) no-repeat center center;
-    background-size: contain;
+    background-size: cover;
     border: 1px solid rgba(0, 0, 0, 0.25);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 10px -2px rgba(0, 0, 0, 0.5);
