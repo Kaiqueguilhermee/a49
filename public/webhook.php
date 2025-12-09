@@ -6,20 +6,22 @@
  * Drakon will call: https://a49000.win/webhook/drakon_api
  */
 
-// Get the request URI
-$requestUri = $_SERVER['REQUEST_URI'] ?? '';
+header('Content-Type: application/json');
 
-// Check if this is a drakon_api request
-if (strpos($requestUri, '/drakon_api') !== false || strpos($requestUri, 'drakon') !== false) {
-    // Bootstrap Laravel
+// Log the access for debugging
+$logFile = __DIR__.'/../storage/logs/webhook-direct.log';
+@file_put_contents($logFile, date('Y-m-d H:i:s') . " - Webhook accessed\n", FILE_APPEND);
+
+// Bootstrap Laravel
+try {
     require __DIR__.'/../vendor/autoload.php';
     $app = require_once __DIR__.'/../bootstrap/app.php';
     
-    $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
-    
-    // Create request with /drakon_api path
+    // Force the request to go to drakon_api route
     $_SERVER['REQUEST_URI'] = '/drakon_api';
     $_SERVER['PATH_INFO'] = '/drakon_api';
+    
+    $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
     
     $response = $kernel->handle(
         $request = Illuminate\Http\Request::capture()
@@ -27,10 +29,16 @@ if (strpos($requestUri, '/drakon_api') !== false || strpos($requestUri, 'drakon'
     
     $response->send();
     $kernel->terminate($request, $response);
-    exit;
+    
+} catch (\Exception $e) {
+    // If Laravel fails, log error and return basic response
+    @file_put_contents($logFile, "ERROR: " . $e->getMessage() . "\n", FILE_APPEND);
+    
+    http_response_code(200);
+    echo json_encode([
+        'status' => true,
+        'message' => 'Webhook received',
+        'error' => $e->getMessage()
+    ]);
 }
-
-// If not drakon, return 404
-http_response_code(404);
-echo json_encode(['error' => 'Not found']);
 exit;
