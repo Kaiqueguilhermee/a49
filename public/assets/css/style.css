@@ -914,6 +914,9 @@ a, a:hover {
     .hidden-mobile{
         display: none;
     }
+    .d-steam-card {
+        padding: 0 0 50% 0 !important;
+    }
 }
 
 .d-steam-card {
