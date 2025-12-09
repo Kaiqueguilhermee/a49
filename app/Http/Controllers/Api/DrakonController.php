@@ -365,24 +365,25 @@ class DrakonController extends Controller
      */
     private function handleTransactionBet(Request $request)
     {
-        $userId = $request->input('user_id');
-        $transactionId = $request->input('transaction_id');
-        $bet = (float) $request->input('bet');
-        $roundId = $request->input('round_id');
-        $game = $request->input('game');
+        try {
+            $userId = $request->input('user_id');
+            $transactionId = $request->input('transaction_id');
+            $bet = (float) $request->input('bet');
+            $roundId = $request->input('round_id');
+            $game = $request->input('game');
 
-        Log::info('Drakon BET request', [
-            'user_id' => $userId,
-            'transaction_id' => $transactionId,
-            'bet' => $bet,
-            'round_id' => $roundId,
-            'game' => $game
-        ]);
+            Log::info('Drakon BET request', [
+                'user_id' => $userId,
+                'transaction_id' => $transactionId,
+                'bet' => $bet,
+                'round_id' => $roundId,
+                'game' => $game
+            ]);
 
-        if (!$userId || !$transactionId || $bet <= 0) {
-            Log::warning('Drakon BET: Invalid params');
-            return response()->json(['status' => false, 'error' => 'INVALID_PARAMS'], 400);
-        }
+            if (!$userId || !$transactionId || $bet <= 0) {
+                Log::warning('Drakon BET: Invalid params');
+                return response()->json(['status' => 0, 'balance' => '0.00'], 200);
+            }
 
         // Check for duplicate transaction
         $existingOrder = Order::where('transaction_id', $transactionId)->first();
@@ -441,6 +442,16 @@ class DrakonController extends Controller
             'status' => 1,
             'balance' => number_format($wallet->total_balance, 2, '.', '')
         ], 200);
+        
+        } catch (\Exception $e) {
+            Log::error('Drakon BET exception: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString(),
+                'user_id' => $userId ?? null,
+                'transaction_id' => $transactionId ?? null,
+                'bet' => $bet ?? null
+            ]);
+            return response()->json(['status' => 0, 'balance' => '0.00'], 200);
+        }
     }
 
     /**
