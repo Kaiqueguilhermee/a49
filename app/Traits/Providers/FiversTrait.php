@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 trait FiversTrait
 {
@@ -205,23 +206,35 @@ trait FiversTrait
     public static function getFiversBalance()
     {
         if(self::getCredentials()) {
+            // Validate API endpoint before making request
+            if(empty(self::$apiEndpoint) || !self::validApiEndpoint(self::$apiEndpoint)) {
+                \Log::warning('Fivers API endpoint is not configured or invalid');
+                return 0;
+            }
+
             $dataArray = [
                 "method"        => "money_info",
                 "agent_code"    => self::$agentCode,
                 "agent_token"   => self::$agentToken,
             ];
 
-            $response = Http::post(self::$apiEndpoint, $dataArray);
+            try {
+                $response = Http::post(self::$apiEndpoint, $dataArray);
 
-            if($response->successful()) {
-                $data = $response->json();
+                if($response->successful()) {
+                    $data = $response->json();
 
-                return $data['agent']['balance'] ?? 0;
-            }else{
-                return false;
+                    return $data['agent']['balance'] ?? 0;
+                }else{
+                    return 0;
+                }
+            } catch (\Exception $e) {
+                \Log::error('Fivers balance check failed: ' . $e->getMessage());
+                return 0;
             }
         }
 
+        return 0;
     }
 
     /**
