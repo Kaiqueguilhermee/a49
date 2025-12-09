@@ -351,12 +351,12 @@ class DrakonController extends Controller
         $wallet = Wallet::where('user_id', $userId)->first();
         
         if (!$wallet) {
-            return response()->json(['status' => 0, 'balance' => 0], 200);
+            return response()->json(['status' => 0, 'balance' => '0.00'], 200);
         }
 
         return response()->json([
             'status' => 1,
-            'balance' => (float) number_format($wallet->total_balance, 2, '.', '')
+            'balance' => number_format($wallet->total_balance, 2, '.', '')
         ], 200);
     }
 
@@ -371,7 +371,16 @@ class DrakonController extends Controller
         $roundId = $request->input('round_id');
         $game = $request->input('game');
 
+        Log::info('Drakon BET request', [
+            'user_id' => $userId,
+            'transaction_id' => $transactionId,
+            'bet' => $bet,
+            'round_id' => $roundId,
+            'game' => $game
+        ]);
+
         if (!$userId || !$transactionId || $bet <= 0) {
+            Log::warning('Drakon BET: Invalid params');
             return response()->json(['status' => false, 'error' => 'INVALID_PARAMS'], 400);
         }
 
@@ -380,19 +389,19 @@ class DrakonController extends Controller
         if ($existingOrder) {
             $wallet = Wallet::where('user_id', $userId)->first();
             return response()->json([
-                'status' => true,
-                'balance' => (float) number_format($wallet->total_balance ?? 0, 2, '.', '')
+                'status' => 1,
+                'balance' => number_format($wallet->total_balance ?? 0, 2, '.', '')
             ], 200);
         }
 
         $wallet = Wallet::where('user_id', $userId)->first();
         
         if (!$wallet) {
-            return response()->json(['status' => false, 'error' => 'INVALID_USER'], 200);
+            return response()->json(['status' => 0, 'balance' => '0.00'], 200);
         }
 
         if ($wallet->total_balance < $bet) {
-            return response()->json(['status' => false, 'error' => 'NO_BALANCE'], 200);
+            return response()->json(['status' => 0, 'balance' => number_format($wallet->total_balance, 2, '.', '')], 200);
         }
 
         // Debit from balance first, then balance_bonus
@@ -430,7 +439,7 @@ class DrakonController extends Controller
 
         return response()->json([
             'status' => 1,
-            'balance' => (float) number_format($wallet->total_balance, 2, '.', '')
+            'balance' => number_format($wallet->total_balance, 2, '.', '')
         ], 200);
     }
 
@@ -446,7 +455,7 @@ class DrakonController extends Controller
         $game = $request->input('game');
 
         if (!$userId || !$transactionId) {
-            return response()->json(['status' => 0, 'balance' => 0], 200);
+            return response()->json(['status' => 0, 'balance' => '0.00'], 200);
         }
 
         // Check for duplicate transaction
@@ -455,18 +464,18 @@ class DrakonController extends Controller
             $wallet = Wallet::where('user_id', $userId)->first();
             return response()->json([
                 'status' => 1,
-                'balance' => (float) number_format($wallet->total_balance ?? 0, 2, '.', '')
+                'balance' => number_format($wallet->total_balance ?? 0, 2, '.', '')
             ], 200);
         }
 
         $wallet = Wallet::where('user_id', $userId)->first();
         
         if (!$wallet) {
-            return response()->json(['status' => 0, 'balance' => 0], 200);
+            return response()->json(['status' => 0, 'balance' => '0.00'], 200);
         }
 
         if ($win < 0) {
-            return response()->json(['status' => 0, 'balance' => 0], 200);
+            return response()->json(['status' => 0, 'balance' => '0.00'], 200);
         }
 
         // Credit to balance
@@ -499,7 +508,7 @@ class DrakonController extends Controller
 
         return response()->json([
             'status' => 1,
-            'balance' => (float) number_format($wallet->total_balance, 2, '.', '')
+            'balance' => number_format($wallet->total_balance, 2, '.', '')
         ], 200);
     }
 
@@ -515,7 +524,7 @@ class DrakonController extends Controller
         $game = $request->input('game');
 
         if (!$userId || !$transactionId) {
-            return response()->json(['status' => false, 'error' => 'INVALID_PARAMS'], 400);
+            return response()->json(['status' => 0, 'balance' => '0.00'], 200);
         }
 
         // Find original transaction
@@ -524,13 +533,14 @@ class DrakonController extends Controller
             ->first();
 
         if (!$originalOrder) {
-            return response()->json(['status' => false, 'error' => 'INVALID_TRANSACTION'], 200);
+            $wallet = Wallet::where('user_id', $userId)->first();
+            return response()->json(['status' => 0, 'balance' => number_format($wallet->total_balance ?? 0, 2, '.', '')], 200);
         }
 
         $wallet = Wallet::where('user_id', $userId)->first();
         
         if (!$wallet) {
-            return response()->json(['status' => false, 'error' => 'INVALID_USER'], 200);
+            return response()->json(['status' => 0, 'balance' => '0.00'], 200);
         }
 
         // Reverse the transaction
@@ -559,8 +569,8 @@ class DrakonController extends Controller
         ]);
 
         return response()->json([
-            'status' => true,
-            'balance' => (float) number_format($wallet->total_balance, 2, '.', '')
+            'status' => 1,
+            'balance' => number_format($wallet->total_balance, 2, '.', '')
         ], 200);
     }
 
@@ -576,7 +586,7 @@ class DrakonController extends Controller
         $amount = (float) $request->input('amount', 0);
 
         if (!$userId || !$transactionId) {
-            return response()->json(['status' => false, 'error' => 'INVALID_PARAMS'], 400);
+            return response()->json(['status' => 0, 'balance' => '0.00'], 200);
         }
 
         // Find original transaction
@@ -585,13 +595,14 @@ class DrakonController extends Controller
             ->first();
 
         if (!$originalOrder) {
-            return response()->json(['status' => false, 'error' => 'INVALID_TRANSACTION'], 200);
+            $wallet = Wallet::where('user_id', $userId)->first();
+            return response()->json(['status' => 0, 'balance' => number_format($wallet->total_balance ?? 0, 2, '.', '')], 200);
         }
 
         $wallet = Wallet::where('user_id', $userId)->first();
         
         if (!$wallet) {
-            return response()->json(['status' => false, 'error' => 'INVALID_USER'], 200);
+            return response()->json(['status' => 0, 'balance' => '0.00'], 200);
         }
 
         // Reverse the transaction
@@ -620,8 +631,8 @@ class DrakonController extends Controller
         ]);
 
         return response()->json([
-            'status' => true,
-            'transaction_status' => 'CANCELED'
+            'status' => 1,
+            'balance' => number_format($wallet->total_balance, 2, '.', '')
         ], 200);
     }
 }
