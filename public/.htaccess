@@ -11,7 +11,7 @@
 
     # Force Drakon webhook to index.php (bypass 404)
     RewriteRule ^drakon_api(/.*)?$ index.php [L,QSA]
-    RewriteRule ^webhook/drakon_api$ webhook.php [L,QSA]
+    RewriteRule ^webhook/drakon_api$ webhook/drakon_api.php [L,QSA]
     RewriteRule ^webhook/drakon(/.*)?$ index.php [L,QSA]
     RewriteRule ^api/drakon_api(/.*)?$ index.php [L,QSA]
 
