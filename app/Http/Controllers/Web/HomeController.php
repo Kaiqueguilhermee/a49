@@ -313,7 +313,14 @@ class HomeController extends Controller
                             'url_length' => strlen($gameUrl),
                         ]);
                         
-                        return redirect()->away($gameUrl);
+                        // Increment game views
+                        $game->increment('views', 1);
+                        
+                        // Return view with iframe instead of redirecting
+                        return view('web.game.index', [
+                            'game' => $game,
+                            'gameUrl' => $gameUrl,
+                        ]);
                     }
                 }
 
