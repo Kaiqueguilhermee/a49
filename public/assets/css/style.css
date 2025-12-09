@@ -950,15 +950,16 @@ a, a:hover {
     .caixa-loop-elementos a, .inner-loop-elementos {
         display: block !important;
         width: 100% !important;
-        height: 130px !important;
+        height: 110px !important;
         overflow: hidden !important;
     }
     
     .row-cols-3 img, .row-cols-md-6 img,
     .caixa-loop-elementos img, .inner-loop-elementos img {
         width: 100% !important;
-        height: 130px !important;
-        max-height: 130px !important;
+        height: 110px !important;
+        max-height: 110px !important;
+        min-height: 110px !important;
         object-fit: cover !important;
         border-radius: 8px !important;
     }
