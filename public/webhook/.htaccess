@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Handle drakon_api without extension as PHP file
+    RewriteRule ^drakon_api$ drakon_api.php [L]
+</IfModule>
+
+<Files "drakon_api">
+    SetHandler application/x-httpd-php
+</Files>
