@@ -920,6 +920,48 @@ a, a:hover {
         max-height: 120px !important;
         height: 120px !important;
     }
+    
+    /* Transformar grid de jogos em scroll horizontal no mobile */
+    .row-cols-3, .row-cols-md-6 {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        scroll-behavior: smooth !important;
+        gap: 10px !important;
+        padding-bottom: 10px !important;
+    }
+    
+    .row-cols-3 .col, .row-cols-md-6 .col,
+    .row-cols-3 .caixa-loop-elementos, .row-cols-md-6 .caixa-loop-elementos {
+        flex: 0 0 auto !important;
+        width: 120px !important;
+        min-width: 120px !important;
+        max-width: 120px !important;
+    }
+    
+    .row-cols-3 img, .row-cols-md-6 img,
+    .caixa-loop-elementos img, .inner-loop-elementos img {
+        height: 150px !important;
+        object-fit: cover !important;
+        width: 100% !important;
+    }
+    
+    /* Estilizar scrollbar no mobile */
+    .row-cols-3::-webkit-scrollbar, .row-cols-md-6::-webkit-scrollbar {
+        height: 4px;
+    }
+    
+    .row-cols-3::-webkit-scrollbar-track, .row-cols-md-6::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+    }
+    
+    .row-cols-3::-webkit-scrollbar-thumb, .row-cols-md-6::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+    }
 }
 
 .d-steam-card {
