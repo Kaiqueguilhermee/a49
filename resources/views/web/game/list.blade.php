@@ -43,7 +43,7 @@
                     <div class="d-steam-cards js-steamCards">
                         @foreach($games as $game)
                             <a href="{{ route('web.fivers.show', ['code' => $game->game_code]) }}" class="d-steam-card-wrapper">
-                                <div class="d-steam-card js-steamCard" style="background-image: url('storage/{{ $game->banner }}')"></div>
+                                <div class="d-steam-card js-steamCard" style="background-image: url('{{ asset('storage/'.$game->banner) }}')"></div>
                             </a>
                         @endforeach
                     </div>
@@ -53,7 +53,7 @@
                     <div class="d-steam-cards js-steamCards">
                         @foreach($games as $gamee)
                             <a href="{{ route('web.vgames.show', ['game' => $gamee->uuid]) }}" class="d-steam-card-wrapper">
-                                <div class="d-steam-card js-steamCard" style="background-image: url('storage/{{ $gamee->cover }}')"></div>
+                                <div class="d-steam-card js-steamCard" style="background-image: url('{{ asset('storage/'.$gamee->cover) }}')"></div>
                             </a>
                         @endforeach
                     </div>
