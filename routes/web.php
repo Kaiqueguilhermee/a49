@@ -92,3 +92,17 @@ Route::get('/drakon-test/games', [DrakonController::class, 'testGames']);
 
 // Server-side game launch endpoint (protected)
 Route::post('/drakon-launch', [DrakonController::class, 'launchGameServer'])->middleware('auth');
+
+// API route to check user balance (web auth)
+Route::get('/api/user/balance', function () {
+    if (!auth()->check()) {
+        return response()->json(['balance' => 0], 401);
+    }
+    
+    $wallet = \App\Models\Wallet::where('user_id', auth()->id())->first();
+    return response()->json([
+        'balance' => $wallet ? $wallet->total_balance : 0,
+        'balance_real' => $wallet ? $wallet->balance : 0,
+        'balance_bonus' => $wallet ? $wallet->balance_bonus : 0,
+    ]);
+})->middleware('auth');
