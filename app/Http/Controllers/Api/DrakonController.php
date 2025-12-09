@@ -256,13 +256,17 @@ class DrakonController extends Controller
     public function webhook(Request $request)
     {
         $data = $request->all();
+        $rawBody = $request->getContent();
         
         Log::info('========== DRAKON WEBHOOK RECEIVED ==========');
         Log::info('Method: ' . ($request->input('method') ?? 'NONE'));
         Log::info('Data: ' . json_encode($data, JSON_PRETTY_PRINT));
+        Log::info('Raw Body: ' . $rawBody);
+        Log::info('Content-Type: ' . $request->header('Content-Type'));
         Log::info('IP: ' . $request->ip());
         Log::info('Full URL: ' . $request->fullUrl());
         Log::info('Request Method: ' . $request->method());
+        Log::info('All Headers: ' . json_encode($request->headers->all()));
         Log::info('=============================================');
 
         $method = $request->input('method');
