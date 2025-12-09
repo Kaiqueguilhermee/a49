@@ -54,14 +54,14 @@ trait FiversTrait
     private static function safePost(string $url, array $data)
     {
         if (!self::validApiEndpoint($url)) {
-            \Log::error('Fivers API endpoint is invalid: ' . $url);
+            Log::error('Fivers API endpoint is invalid: ' . $url);
             return false;
         }
 
         try {
             return Http::post($url, $data);
         } catch (\Throwable $e) {
-            \Log::error('Fivers HTTP request failed: ' . $e->getMessage());
+            Log::error('Fivers HTTP request failed: ' . $e->getMessage());
             return false;
         }
     }
@@ -208,7 +208,7 @@ trait FiversTrait
         if(self::getCredentials()) {
             // Validate API endpoint before making request
             if(empty(self::$apiEndpoint) || !self::validApiEndpoint(self::$apiEndpoint)) {
-                \Log::warning('Fivers API endpoint is not configured or invalid');
+                Log::warning('Fivers API endpoint is not configured or invalid');
                 return 0;
             }
 
@@ -229,7 +229,7 @@ trait FiversTrait
                     return 0;
                 }
             } catch (\Exception $e) {
-                \Log::error('Fivers balance check failed: ' . $e->getMessage());
+                Log::error('Fivers balance check failed: ' . $e->getMessage());
                 return 0;
             }
         }
