@@ -917,7 +917,7 @@ a, a:hover {
 }
 
 .d-steam-card {
-    padding: 0 0 100% 0;
+    padding: 0 0 70% 0;
     background: url(style.css) no-repeat center center;
     background-size: contain;
     border: 1px solid rgba(0, 0, 0, 0.25);
