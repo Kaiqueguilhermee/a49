@@ -25,6 +25,16 @@ Route::match(['get', 'post'], '/drakon_api', [\App\Http\Controllers\Api\DrakonCo
 Route::match(['get', 'post'], '/webhook/drakon', [\App\Http\Controllers\Api\DrakonController::class, 'webhook'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 Route::match(['get', 'post'], '/api/drakon_api', [\App\Http\Controllers\Api\DrakonController::class, 'webhook'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
+// Teste simples do endpoint Drakon
+Route::get('/drakon_api/test', function() {
+    return response()->json([
+        'status' => 'OK',
+        'message' => 'Drakon webhook endpoint is working',
+        'timestamp' => now()->toDateTimeString(),
+        'url' => url('/drakon_api')
+    ]);
+});
+
 include_once(__DIR__ . '/groups/auth/login.php');
 include_once(__DIR__ . '/groups/auth/social.php');
 include_once(__DIR__ . '/groups/auth/register.php');
