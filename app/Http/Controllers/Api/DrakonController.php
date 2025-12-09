@@ -320,9 +320,12 @@ class DrakonController extends Controller
         }
 
         return response()->json([
-            'email' => $user->email,
-            'name_jogador' => $user->name,
-            'date' => $user->created_at ? $user->created_at->toIso8601String() : now()->toIso8601String()
+            'status' => true,
+            'data' => [
+                'email' => $user->email,
+                'name_jogador' => $user->name,
+                'date' => $user->created_at ? $user->created_at->toIso8601String() : now()->toIso8601String()
+            ]
         ], 200);
     }
 
@@ -340,11 +343,11 @@ class DrakonController extends Controller
         $wallet = Wallet::where('user_id', $userId)->where('active', 1)->first();
         
         if (!$wallet) {
-            return response()->json(['status' => 0, 'error' => 'INVALID_USER'], 200);
+            return response()->json(['status' => false, 'error' => 'INVALID_USER'], 400);
         }
 
         return response()->json([
-            'status' => 1,
+            'status' => true,
             'balance' => (float) number_format($wallet->total_balance, 2, '.', '')
         ], 200);
     }

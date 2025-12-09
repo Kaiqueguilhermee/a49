@@ -28,7 +28,7 @@ Route::get('/games/game_launch', [DrakonController::class, 'gameLaunch']);
 Route::get('/games/all', [DrakonController::class, 'allGames']);
 Route::get('/games/provider', [DrakonController::class, 'providers']);
 
-// Drakon Webhook - múltiplas rotas para compatibilidade
-Route::post('/drakon_api', [DrakonController::class, 'webhook']);
-Route::post('/webhook/drakon', [DrakonController::class, 'webhook']);
-Route::post('/drakon/webhook', [DrakonController::class, 'webhook']);
+// Drakon Webhook - múltiplas rotas para compatibilidade (GET e POST)
+Route::match(['get', 'post'], '/drakon_api', [DrakonController::class, 'webhook']);
+Route::match(['get', 'post'], '/webhook/drakon', [DrakonController::class, 'webhook']);
+Route::match(['get', 'post'], '/drakon/webhook', [DrakonController::class, 'webhook']);
