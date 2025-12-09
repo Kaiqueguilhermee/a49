@@ -261,12 +261,19 @@ class DrakonController extends Controller
         Log::info('Method: ' . ($request->input('method') ?? 'NONE'));
         Log::info('Data: ' . json_encode($data, JSON_PRETTY_PRINT));
         Log::info('IP: ' . $request->ip());
+        Log::info('Full URL: ' . $request->fullUrl());
+        Log::info('Request Method: ' . $request->method());
         Log::info('=============================================');
 
         $method = $request->input('method');
 
+        // Se não tem method, retorna sucesso básico para teste de conectividade
         if (empty($method)) {
-            return response()->json(['status' => false, 'error' => 'INVALID_METHOD'], 400);
+            return response()->json([
+                'status' => true, 
+                'message' => 'Drakon webhook endpoint is active',
+                'timestamp' => now()->toIso8601String()
+            ], 200);
         }
 
         try {
