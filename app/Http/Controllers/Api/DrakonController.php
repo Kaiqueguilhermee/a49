@@ -499,7 +499,8 @@ class DrakonController extends Controller
 
         return response()->json([
             'status' => 1,
-            'balance' => (float) number_format($wallet->total_balance, 2, '.', '')\n        ], 200);
+            'balance' => (float) number_format($wallet->total_balance, 2, '.', '')
+        ], 200);
     }
 
     /**
