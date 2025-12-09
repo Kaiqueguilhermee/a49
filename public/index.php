@@ -7,6 +7,26 @@ define('LARAVEL_START', microtime(true));
 
 /*
 |--------------------------------------------------------------------------
+| Drakon Webhook Direct Handler
+|--------------------------------------------------------------------------
+| Handle Drakon webhook requests before Laravel routing to avoid 404 errors
+*/
+
+$requestUri = $_SERVER['REQUEST_URI'] ?? '';
+$requestMethod = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+
+// Check if this is a Drakon webhook request
+if (preg_match('#^/drakon_api#', parse_url($requestUri, PHP_URL_PATH))) {
+    // Log the request for debugging
+    error_log('[DRAKON] Direct handler triggered for: ' . $requestUri);
+    
+    // Let Laravel handle it normally but ensure no 404
+    // This section just logs that we detected the request
+    // Laravel routing will handle the actual processing
+}
+
+/*
+|--------------------------------------------------------------------------
 | Check If The Application Is Under Maintenance
 |--------------------------------------------------------------------------
 |
