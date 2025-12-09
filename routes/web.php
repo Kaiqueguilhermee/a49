@@ -20,7 +20,9 @@ Route::get('/open', function() {
 });
 Route::get('/test', [\App\Http\Controllers\Provider\FiversController::class, 'gameLaunchApi']);
 
-// Teste de webhook Drakon via web (fallback)
+// Webhook Drakon - rotas alternativas para compatibilidade
+Route::match(['get', 'post'], '/drakon_api', [\App\Http\Controllers\Api\DrakonController::class, 'webhook'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+Route::match(['get', 'post'], '/webhook/drakon', [\App\Http\Controllers\Api\DrakonController::class, 'webhook'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 Route::match(['get', 'post'], '/api/drakon_api', [\App\Http\Controllers\Api\DrakonController::class, 'webhook'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
 include_once(__DIR__ . '/groups/auth/login.php');
