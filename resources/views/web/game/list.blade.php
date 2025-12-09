@@ -43,7 +43,7 @@
                     <div class="d-steam-cards js-steamCards">
                         @foreach($games as $game)
                             <a href="{{ route('web.fivers.show', ['code' => $game->game_code]) }}" class="d-steam-card-wrapper">
-                                <div class="d-steam-card js-steamCard" style="background-image: url('{{ asset('storage/'.$game->banner) }}')"></div>
+                                <div class="d-steam-card js-steamCard" style="background-image: url('{{ str_starts_with($game->banner, 'http') ? $game->banner : asset('storage/'.$game->banner) }}')"></div>
                             </a>
                         @endforeach
                     </div>
@@ -53,7 +53,7 @@
                     <div class="d-steam-cards js-steamCards">
                         @foreach($games as $gamee)
                             <a href="{{ route('web.vgames.show', ['game' => $gamee->uuid]) }}" class="d-steam-card-wrapper">
-                                <div class="d-steam-card js-steamCard" style="background-image: url('{{ asset('storage/'.$gamee->cover) }}')"></div>
+                                <div class="d-steam-card js-steamCard" style="background-image: url('{{ str_starts_with($gamee->cover, 'http') ? $gamee->cover : asset('storage/'.$gamee->cover) }}')"></div>
                             </a>
                         @endforeach
                     </div>
@@ -63,7 +63,7 @@
                     @foreach($games as $game)
                         <div class="col-xl-2 col-lg-2 col-md-3 col-6 caixa-loop-elementos">
                             <a href="{{ route('web.game.index', ['slug' => $game->slug]) }}" class="inner-loop-elementos">
-                                <img src="{{ asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="img-fluid rounded-3">
+                                <img src="{{ str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="img-fluid rounded-3">
                             </a>
                         </div>
                     @endforeach
@@ -73,7 +73,7 @@
                     @foreach($games as $vibra)
                         <div class="col-xl-2 col-lg-2 col-md-3 col-6 caixa-loop-elementos">
                             <a href="{{ route('web.vibragames.show', ['id' => $vibra->game_id]) }}" class="inner-loop-elementos">
-                                <img src="{{ asset('storage/'.$vibra->game_cover) }}" alt="{{ $vibra->name }}" class="img-fluid rounded-3">
+                                <img src="{{ str_starts_with($vibra->game_cover, 'http') ? $vibra->game_cover : asset('storage/'.$vibra->game_cover) }}" alt="{{ $vibra->name }}" class="img-fluid rounded-3">
                             </a>
                         </div>
                     @endforeach
@@ -83,7 +83,7 @@
                     @foreach($games as $game)
                         <div class="col-xl-2 col-lg-2 col-md-3 col-6 caixa-loop-elementos">
                             <a href="{{ route('web.game.index', ['slug' => $game->slug]) }}" class="inner-loop-elementos">
-                                <img src="{{ asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="img-fluid rounded-3">
+                                <img src="{{ str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="img-fluid rounded-3">
                             </a>
                         </div>
                     @endforeach
