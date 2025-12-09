@@ -331,12 +331,9 @@ class DrakonController extends Controller
         }
 
         return response()->json([
-            'status' => true,
-            'data' => [
-                'email' => $user->email,
-                'name_jogador' => $user->name,
-                'date' => $user->created_at ? $user->created_at->toIso8601String() : now()->toIso8601String()
-            ]
+            'user_id' => (string) $user->id,
+            'email' => $user->email,
+            'name_jogador' => $user->name
         ], 200);
     }
 
@@ -354,11 +351,11 @@ class DrakonController extends Controller
         $wallet = Wallet::where('user_id', $userId)->where('active', 1)->first();
         
         if (!$wallet) {
-            return response()->json(['status' => false, 'error' => 'INVALID_USER'], 400);
+            return response()->json(['status' => 0, 'balance' => 0], 200);
         }
 
         return response()->json([
-            'status' => true,
+            'status' => 1,
             'balance' => (float) number_format($wallet->total_balance, 2, '.', '')
         ], 200);
     }
@@ -432,7 +429,7 @@ class DrakonController extends Controller
         ]);
 
         return response()->json([
-            'status' => true,
+            'status' => 1,
             'balance' => (float) number_format($wallet->total_balance, 2, '.', '')
         ], 200);
     }
@@ -449,7 +446,7 @@ class DrakonController extends Controller
         $game = $request->input('game');
 
         if (!$userId || !$transactionId) {
-            return response()->json(['status' => false, 'error' => 'INVALID_PARAMS'], 400);
+            return response()->json(['status' => 0, 'balance' => 0], 200);
         }
 
         // Check for duplicate transaction
@@ -457,7 +454,7 @@ class DrakonController extends Controller
         if ($existingOrder) {
             $wallet = Wallet::where('user_id', $userId)->first();
             return response()->json([
-                'status' => true,
+                'status' => 1,
                 'balance' => (float) number_format($wallet->total_balance ?? 0, 2, '.', '')
             ], 200);
         }
@@ -465,11 +462,11 @@ class DrakonController extends Controller
         $wallet = Wallet::where('user_id', $userId)->where('active', 1)->first();
         
         if (!$wallet) {
-            return response()->json(['status' => false, 'error' => 'INVALID_USER'], 200);
+            return response()->json(['status' => 0, 'balance' => 0], 200);
         }
 
         if ($win < 0) {
-            return response()->json(['status' => false, 'error' => 'NO_AMOUNT'], 200);
+            return response()->json(['status' => 0, 'balance' => 0], 200);
         }
 
         // Credit to balance
@@ -501,9 +498,8 @@ class DrakonController extends Controller
         ]);
 
         return response()->json([
-            'status' => true,
-            'balance' => (float) number_format($wallet->total_balance, 2, '.', '')
-        ], 200);
+            'status' => 1,
+            'balance' => (float) number_format($wallet->total_balance, 2, '.', '')\n        ], 200);
     }
 
     /**
