@@ -1,7 +1,18 @@
 @extends('layouts.web')
 
 @push('styles')
-
+<style>
+    /* Esconder navegação mobile quando jogo está aberto */
+    .mobile-bottom-nav {
+        display: none !important;
+    }
+    
+    /* Fazer o jogo ocupar toda a tela */
+    .playgame {
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+    }
+</style>
 @endpush
 
 @section('content')
@@ -13,7 +24,3 @@
 
    @include('includes.deposit')
 @endsection
-
-@push('styles')
-
-@endpush
