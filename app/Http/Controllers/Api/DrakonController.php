@@ -385,7 +385,7 @@ class DrakonController extends Controller
             ], 200);
         }
 
-        $wallet = Wallet::where('user_id', $userId)->where('active', 1)->first();
+        $wallet = Wallet::where('user_id', $userId)->first();
         
         if (!$wallet) {
             return response()->json(['status' => false, 'error' => 'INVALID_USER'], 200);
@@ -459,7 +459,7 @@ class DrakonController extends Controller
             ], 200);
         }
 
-        $wallet = Wallet::where('user_id', $userId)->where('active', 1)->first();
+        $wallet = Wallet::where('user_id', $userId)->first();
         
         if (!$wallet) {
             return response()->json(['status' => 0, 'balance' => 0], 200);
