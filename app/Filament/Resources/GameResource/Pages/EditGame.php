@@ -34,6 +34,11 @@ class EditGame extends EditRecord
             $data['slug'] = Str::slug($data['provider'].' '.$data['name']);
         }
 
+        // Se não houver nova imagem, remove do array para não atualizar
+        if(empty($data['image']) || $data['image'] === null) {
+            unset($data['image']);
+        }
+
         $record->update($data);
 
         return $record;

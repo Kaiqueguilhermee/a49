@@ -104,8 +104,7 @@ class GameResource extends Resource
                             ->label('Imagem')
                             ->placeholder('Carregue a imagem do jogo')
                             ->image()
-                            ->columnSpanFull()
-                            ->required(),
+                            ->columnSpanFull(),
                         Forms\Components\TextInput::make('technology')
                             ->label('Tecnologia')
                             ->columnSpanFull()

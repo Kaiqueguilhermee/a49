@@ -2,7 +2,7 @@
     <aside class="page__content__navbar__esq">
         <div class="">
             <a class="page__navbar__logo" href="{{ url('/') }}">
-                <img src="{{ asset('storage/'.config('setting')['software_logo_white']) }}" alt="" style="max-width:100%; height: 30px">
+                <img src="{{ asset('storage/'.config('setting')['software_logo_white']) }}" alt="" style="max-width:100%; height: 50px">
             </a>
 
             <button class="navbar-toggler-close close-button" type="button">

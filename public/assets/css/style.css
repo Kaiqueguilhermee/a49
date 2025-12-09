@@ -1505,8 +1505,26 @@ a, a:hover {
     font-size: 12px;
 }
 @media only screen and (max-width: 768px) {
+    .page__content__navbar__esq > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
     .page__navbar__logo{
-        display: none;
+        justify-content: center;
+        width: 100%;
+        padding: 0;
+    }
+    .page__navbar__logo img {
+        display: block;
+        margin: 0 auto;
+        height: 60px !important;
+        max-width: 95%;
+    }
+    .page__navbar__logo .navbar-toggler-close {
+        position: absolute;
+        right: 10px;
     }
     .modal-body {
         padding: 20px;

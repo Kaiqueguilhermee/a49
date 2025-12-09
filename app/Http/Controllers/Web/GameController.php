@@ -10,6 +10,7 @@ use App\Models\GameExclusive;
 use App\Models\VibraCasinoGame;
 use App\Traits\Providers\SlotegratorTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class GameController extends Controller
 {
@@ -38,6 +39,10 @@ class GameController extends Controller
 
                 if($game->provider_service == 'slotegrator') {
                     $gameProvider = $this->startGameSlotegrator($game->uuid);
+                }
+
+                if($game->provider_service == 'drakon') {
+                    $gameProvider = $this->startGameDrakon($game->uuid);
                 }
 
                 if(!empty($gameProvider) && $gameProvider['status']) {
@@ -198,5 +203,96 @@ class GameController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * Start game with Drakon provider
+     */
+    private function startGameDrakon($gameId)
+    {
+        try {
+            $keys = \App\Models\GamesKey::first();
+            $agentCode = $keys->drakon_agent_code ?? env('DRAKON_AGENT_CODE');
+            $agentToken = $keys->drakon_agent_token ?? env('DRAKON_AGENT_TOKEN');
+            $agentSecret = $keys->drakon_agent_secret ?? env('DRAKON_AGENT_SECRET');
+
+            if (empty($agentCode) || empty($agentToken) || empty($agentSecret)) {
+                return ['status' => false, 'error' => 'Credenciais Drakon não configuradas'];
+            }
+
+            $user = auth()->user();
+            $userId = $user->id ?? '';
+            $userName = $user->name ?? '';
+
+            // Step 1: Authenticate
+            $credentials = base64_encode($agentToken . ':' . $agentSecret);
+            
+            $authResponse = \Illuminate\Support\Facades\Http::timeout(15)
+                ->withHeaders([
+                    'Authorization' => 'Bearer ' . $credentials,
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                ])
+                ->post('https://gator.drakon.casino/api/v1/auth/authentication', [
+                    'token' => $agentToken,
+                    'secret' => $agentSecret,
+                ]);
+
+            if (!$authResponse->successful()) {
+                Log::error('Drakon auth failed', [
+                    'status' => $authResponse->status(),
+                    'body' => $authResponse->body(),
+                ]);
+                return ['status' => false, 'error' => 'Falha na autenticação Drakon'];
+            }
+
+            $authData = $authResponse->json();
+            $accessToken = $authData['access_token'] ?? null;
+
+            if (empty($accessToken)) {
+                return ['status' => false, 'error' => 'Token de acesso não recebido'];
+            }
+
+            // Step 2: Launch game
+            $queryParams = http_build_query([
+                'agent_code' => $agentCode,
+                'agent_token' => $agentToken,
+                'game_id' => $gameId,
+                'type' => 'CHARGED',
+                'currency' => 'BRL',
+                'lang' => 'pt_BR',
+                'user_id' => $userId,
+                'user_name' => $userName,
+                'device' => 'desktop',
+                'mode' => 'real',
+            ]);
+
+            $apiUrl = 'https://gator.drakon.casino/api/v1/games/game_launch?' . $queryParams;
+            
+            $response = \Illuminate\Support\Facades\Http::timeout(15)
+                ->withHeaders([
+                    'Authorization' => 'Bearer ' . $accessToken,
+                    'Accept' => 'application/json',
+                ])
+                ->get($apiUrl);
+
+            if ($response->successful()) {
+                $data = $response->json();
+                if (!empty($data['game_url'])) {
+                    return ['status' => true, 'game_url' => $data['game_url']];
+                }
+            }
+
+            Log::error('Drakon API game_launch failed', [
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
+
+            return ['status' => false, 'error' => 'Falha ao lançar o jogo'];
+
+        } catch (\Throwable $e) {
+            Log::error('Drakon API exception: ' . $e->getMessage());
+            return ['status' => false, 'error' => 'Erro: ' . $e->getMessage()];
+        }
     }
 }

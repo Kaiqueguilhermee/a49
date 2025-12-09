@@ -38,6 +38,16 @@ class HomeController extends Controller
                 })
                 ->get();
 
+        // TopTrend Gaming - Jogos Drakon em destaque
+        $topTrendGames = Game::where(function($q) {
+                    $q->where('provider_service', 'drakon')
+                        ->orWhere('provider', 'drakon');
+                })
+                ->where('active', 1)
+                ->orderBy('views', 'desc')
+                ->limit(12)
+                ->get();
+
         // Hide other sections (Fivers, Vibra, exclusives) to show only Drakon games
         $providers = collect();
         $gamesExclusives = collect();
@@ -108,6 +118,7 @@ class HomeController extends Controller
 
         return view('web.home.index', [
             'games' => $games,
+            'topTrendGames' => $topTrendGames,
             'providers' => $providers,
             'gamesExclusives' => $gamesExclusives,
             'gamesVibra' => $gamesVibra,
@@ -271,16 +282,6 @@ class HomeController extends Controller
                     Log::info('cURL Error: ' . $error);
                 }
                 Log::info('=========================================');
-                
-                // Output to browser console
-                dump([
-                    'DRAKON_API' => [
-                        'status' => $statusCode,
-                        'body_length' => strlen($rawBody),
-                        'body' => $rawBody,
-                        'parsed' => json_decode($rawBody, true),
-                    ]
-                ]);
 
                 if ($response->successful()) {
                     $data = $response->json();
@@ -418,8 +419,8 @@ class HomeController extends Controller
         $category = Category::where('slug', $slug)->first();
 
         if(!empty($category)) {
-            $games = Game::where('category_id', $category->id)->whereActive(1)->paginate();
-            $gamesFivers = FiversGame::where('casino_category_id', $category->id)->whereStatus(1)->paginate();
+            $games = Game::where('category_id', $category->id)->whereActive(1)->paginate(18);
+            $gamesFivers = collect(); // Vazio, não exibir jogos Fivers
 
             return view('web.categories.index', compact(['games', 'gamesFivers', 'category']));
         }

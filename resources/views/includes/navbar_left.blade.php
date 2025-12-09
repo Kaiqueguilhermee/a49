@@ -65,7 +65,6 @@
                         @foreach(\App\Models\Category::all() as $category)
                             <li>
                                 <a class="nav-link" href="{{ route('web.category.index', ['slug' => $category->slug]) }}">
-                                    <img src="{{ asset('storage/'.$category->image) }}" alt="{{ $category->name }}" width="24" class="mr-2">
                                     {{ $category->name }}
                                 </a>
                             </li>

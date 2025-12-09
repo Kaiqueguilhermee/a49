@@ -79,7 +79,7 @@
                     <div class="d-steam-cards js-steamCards">
                         @foreach($gamesExclusives as $gamee)
                             <a href="{{ route('web.vgames.show', ['game' => $gamee->uuid]) }}" class="d-steam-card-wrapper">
-                                <div class="d-steam-card js-steamCard" style="background-image: url('storage/{{ $gamee->cover }}')"></div>
+                                <div class="d-steam-card js-steamCard" style="background-image: url('{{ asset('storage/'.$gamee->cover) }}')"></div>
                             </a>
                         @endforeach
                     </div>
@@ -88,19 +88,39 @@
                 <br>
                 <br>
 
+                <!-- TopTrend Gaming - Jogos em Destaque -->
+                @if(isset($topTrendGames) && count($topTrendGames) > 0)
+                    @include('includes.title', ['link' => url('/games?tab=all'), 'title' => '+Jogados Da Semana', 'icon' => 'fa-duotone fa-gamepad-modern'])
+
+                    <div class="row row-cols-3 row-cols-md-6 mt-3">
+                        @foreach($topTrendGames as $game)
+                            <div class="col caixa-loop-elementos">
+                                <a href="{{ route('web.play', ['uuid' => $game->uuid]) }}" class="inner-loop-elementos">
+                                    <img src="{{ str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="img-fluid rounded-3">
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <br>
+                    <br>
+                @endif
+
                 @if(count($providers) > 0)
                     @foreach($providers as $provider)
-                        @include('includes.title', ['link' => url('/games?provider='.$provider->code.'&tab=fivers'), 'title' => $provider->name, 'icon' => 'fa-duotone fa-gamepad-modern'])
+                        @if($provider->games->where('status', 1)->count() > 0)
+                            @include('includes.title', ['link' => url('/games?provider='.$provider->code.'&tab=fivers'), 'title' => $provider->name, 'icon' => 'fa-duotone fa-gamepad-modern'])
 
-                        <div class="row row-cols-3 row-cols-md-6 mt-3">
-                            @foreach($provider->games->where('status', 1) as $gameProvider)
-                                <div class="col mb-3">
-                                    <a href="{{ route('web.fivers.show', ['code' => $gameProvider->game_code]) }}" class="">
-                                        <img src="{{ asset('storage/'.$gameProvider->banner) }}" alt="{{ $gameProvider->game_name }}" class="w-full rounded-3">
-                                    </a>
-                                </div>
-                            @endforeach
-                        </div>
+                            <div class="row row-cols-3 row-cols-md-6 mt-3">
+                                @foreach($provider->games->where('status', 1) as $gameProvider)
+                                    <div class="col mb-3">
+                                        <a href="{{ route('web.fivers.show', ['code' => $gameProvider->game_code]) }}" class="">
+                                            <img src="{{ asset('storage/'.$gameProvider->banner) }}" alt="{{ $gameProvider->game_name }}" class="w-full rounded-3">
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     @endforeach
                 @endif
 
@@ -120,12 +140,10 @@
                                     <a href="{{ route('web.play', ['uuid' => $game->uuid]) }}" class="inner-loop-elementos">
                                         <img src="{{ str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="img-fluid rounded-3">
                                     </a>
-                                    <div class="game-name text-center mt-2">{{ $game->name }}</div>
                                 @else
                                     <a href="{{ route('web.game.index', ['slug' => $game->slug]) }}" class="inner-loop-elementos">
                                         <img src="{{ asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="img-fluid rounded-3">
                                     </a>
-                                    <div class="game-name text-center mt-2">{{ $game->name }}</div>
                                 @endif
                             </div>
                         @endforeach
