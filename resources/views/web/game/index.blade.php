@@ -80,8 +80,6 @@
     header, footer, nav:not(.mobile-bottom-nav) {
         display: none !important;
     }
-</style>
-@endpush
 
     /* Modal de Saldo Insuficiente */
     #noBalanceModal {
