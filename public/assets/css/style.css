@@ -929,23 +929,38 @@ a, a:hover {
         overflow-y: hidden !important;
         -webkit-overflow-scrolling: touch !important;
         scroll-behavior: smooth !important;
-        gap: 10px !important;
+        gap: 8px !important;
         padding-bottom: 10px !important;
+        margin: 0 -15px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
     }
     
     .row-cols-3 .col, .row-cols-md-6 .col,
     .row-cols-3 .caixa-loop-elementos, .row-cols-md-6 .caixa-loop-elementos {
         flex: 0 0 auto !important;
-        width: 120px !important;
-        min-width: 120px !important;
-        max-width: 120px !important;
+        width: 100px !important;
+        min-width: 100px !important;
+        max-width: 100px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .row-cols-3 .col a, .row-cols-md-6 .col a,
+    .caixa-loop-elementos a, .inner-loop-elementos {
+        display: block !important;
+        width: 100% !important;
+        height: 130px !important;
+        overflow: hidden !important;
     }
     
     .row-cols-3 img, .row-cols-md-6 img,
     .caixa-loop-elementos img, .inner-loop-elementos img {
-        height: 150px !important;
-        object-fit: cover !important;
         width: 100% !important;
+        height: 130px !important;
+        max-height: 130px !important;
+        object-fit: cover !important;
+        border-radius: 8px !important;
     }
     
     /* Estilizar scrollbar no mobile */
