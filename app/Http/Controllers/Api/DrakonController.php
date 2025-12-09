@@ -348,7 +348,7 @@ class DrakonController extends Controller
             return response()->json(['status' => 0, 'error' => 'INVALID_PARAMS'], 400);
         }
 
-        $wallet = Wallet::where('user_id', $userId)->where('active', 1)->first();
+        $wallet = Wallet::where('user_id', $userId)->first();
         
         if (!$wallet) {
             return response()->json(['status' => 0, 'balance' => 0], 200);
