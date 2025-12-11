@@ -921,8 +921,9 @@ a, a:hover {
         height: 120px !important;
     }
     
-    /* Transformar grid de jogos em scroll horizontal no mobile - APENAS +Jogados Da Semana */
-    .scroll-horizontal-mobile {
+    /* Transformar grid de jogos em scroll horizontal no mobile */
+    .scroll-horizontal-mobile,
+    .d-steam-cards {
         display: flex !important;
         flex-wrap: nowrap !important;
         overflow-x: auto !important;
@@ -937,7 +938,8 @@ a, a:hover {
     }
     
     .scroll-horizontal-mobile .col,
-    .scroll-horizontal-mobile .caixa-loop-elementos {
+    .scroll-horizontal-mobile .caixa-loop-elementos,
+    .d-steam-cards .d-steam-card-wrapper {
         flex: 0 0 auto !important;
         width: 180px !important;
         min-width: 180px !important;
