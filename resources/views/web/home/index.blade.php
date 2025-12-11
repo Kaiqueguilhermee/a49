@@ -36,42 +36,33 @@
             @include('includes.navbar_left')
 
             <div class="page__content">
-                <section id="image-carousel" class="splide" aria-label="">
-                    <div class="splide__track">
-                        <div class="splide-banner">
-                            Ganhe 10 rodadas grátis <span style="margin-left: 10px"><i class="fa-solid fa-fire"></i></span>
-                        </div>
-                        <ul class="splide__list">
-                            @foreach(\App\Models\Banner::where('type', 'carousel')->get() as $banner)
-                                <li class="splide__slide">
-                                    <a href="{{ $banner->link }}">
-                                        <img src="{{ asset('storage/'.$banner->image) }}" alt="">
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </section>
+                <!-- Banner Carousel -->
+                <x-banner-carousel 
+                    :banners="\App\Models\Banner::where('type', 'carousel')->get()" 
+                    :showPromo="true"
+                    promoText="Ganhe 10 rodadas grátis"
+                />
 
-                <!-- Search -->
-                <form action="{{ url('/') }}" method="GET">
-                    <div class="input-group input-search-group">
-                        <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Digite o que você procura..." aria-label="Pesquisar" aria-describedby="basic-addon2">
-                        <span class="input-group-text" id="basic-addon2"><i class="fa-duotone fa-magnifying-glass"></i> </span>
-                    </div>
-                </form>
+                <!-- Search Bar -->
+                <x-search-bar 
+                    placeholder="Digite o que você procura..." 
+                    :value="request('search', '')"
+                />
 
-
-                <!-- Jogos da plataforma -->
+                <!-- Jogos da Casa -->
                 @if(count($gamesExclusives) > 0)
-                    <div class="mt-5">
-                        @include('includes.title', ['link' => url('/games?tab=exclusives'), 'title' => 'Jogos da Casa', 'icon' => 'fa-regular fa-gamepad-modern'])
-                    </div>
+                    <x-section-title 
+                        title="Jogos da Casa" 
+                        :link="url('/games?tab=exclusives')"
+                        icon="fa-regular fa-gamepad-modern"
+                    />
 
                     <div class="row row-cols-3 row-cols-md-6 mt-3">
                         @foreach(\App\Models\Banner::where('type', 'home')->get() as $banner)
                             <div class="col">
-                                <a href="{{ $banner->link }}"><img src="{{ asset('storage/'.$banner->image) }}" alt="" class="img-fluid rounded-4 w-full"></a>
+                                <a href="{{ $banner->link }}">
+                                    <img src="{{ asset('storage/'.$banner->image) }}" alt="" class="img-fluid rounded-4 w-full">
+                                </a>
                             </div>
                         @endforeach
                     </div>
@@ -85,95 +76,75 @@
                     </div>
                 @endif
 
-                <br>
-                <br>
-
-                <!-- TopTrend Gaming - Jogos em Destaque -->
+                <!-- +Jogados Da Semana -->
                 @if(isset($topTrendGames) && count($topTrendGames) > 0)
-                    @include('includes.title', ['link' => url('/games?tab=all'), 'title' => '+Jogados Da Semana', 'icon' => 'fa-duotone fa-gamepad-modern'])
+                    <x-section-title 
+                        title="+Jogados Da Semana" 
+                        :link="url('/games?tab=all')"
+                    />
 
-                    <div class="row row-cols-3 row-cols-md-6 mt-3 scroll-horizontal-mobile">
-                        @foreach($topTrendGames as $game)
-                            <div class="col caixa-loop-elementos">
-                                <a href="{{ route('web.play', ['uuid' => $game->uuid]) }}" class="inner-loop-elementos">
-                                    <img src="{{ str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="img-fluid rounded-3">
-                                </a>
-                            </div>
-                        @endforeach
-                    </div>
-
-                    <br>
-                    <br>
+                    <x-game-grid 
+                        :games="$topTrendGames" 
+                        :scrollable="true"
+                        :showPrizes="true"
+                        columns="3"
+                    />
                 @endif
 
+                <!-- Jogos por Provider -->
                 @if(count($providers) > 0)
                     @foreach($providers as $provider)
                         @if($provider->games->where('status', 1)->count() > 0)
-                            @include('includes.title', ['link' => url('/games?provider='.$provider->code.'&tab=fivers'), 'title' => $provider->name, 'icon' => 'fa-duotone fa-gamepad-modern'])
+                            <x-section-title 
+                                :title="$provider->name" 
+                                :link="url('/games?provider='.$provider->code.'&tab=fivers')"
+                            />
 
-                            <div class="row row-cols-3 row-cols-md-6 mt-3">
-                                @foreach($provider->games->where('status', 1) as $gameProvider)
-                                    <div class="col mb-3">
-                                        <a href="{{ route('web.fivers.show', ['code' => $gameProvider->game_code]) }}" class="">
-                                            <img src="{{ asset('storage/'.$gameProvider->banner) }}" alt="{{ $gameProvider->game_name }}" class="w-full rounded-3">
-                                        </a>
-                                    </div>
-                                @endforeach
-                            </div>
+                            <x-game-grid 
+                                :games="$provider->games->where('status', 1)" 
+                                columns="3"
+                            />
                         @endif
                     @endforeach
                 @endif
 
-                <!-- Slotegrator -->
+                <!-- Todos os Jogos -->
                 @if(count($games) > 0)
-                    @include('includes.title', ['link' => url('/games?tab=all'), 'title' => 'Todos os Jogos', 'icon' => 'fa-duotone fa-gamepad-modern'])
+                    <x-section-title 
+                        title="Todos os Jogos" 
+                        :link="url('/games?tab=all')"
+                    />
 
-                    <div class="row row-cols-3 row-cols-md-6 mt-3">
-                        @foreach($games as $game)
-                            <div class="col caixa-loop-elementos">
-                                @php
-                                    $service = strtolower($game->provider_service ?? $game->provider ?? '');
-                                    $isDrakon = $service === 'drakon';
-                                @endphp
-
-                                @if($isDrakon)
-                                    <a href="{{ route('web.play', ['uuid' => $game->uuid]) }}" class="inner-loop-elementos">
-                                        <img src="{{ str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="img-fluid rounded-3">
-                                    </a>
-                                @else
-                                    <a href="{{ route('web.game.index', ['slug' => $game->slug]) }}" class="inner-loop-elementos">
-                                        <img src="{{ asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="img-fluid rounded-3">
-                                    </a>
-                                @endif
-                            </div>
-                        @endforeach
-                    </div>
+                    <x-game-grid 
+                        :games="$games" 
+                        columns="3"
+                    />
                 @endif
 
-                <br>
-
+                <!-- Jogos Vibra -->
                 @if(count($gamesVibra) > 0)
-                    @include('includes.title', ['link' => url('/games?tab=vibra'), 'title' => 'Jogos Vibra', 'icon' => 'fa-duotone fa-gamepad-modern'])
+                    <x-section-title 
+                        title="Jogos Vibra" 
+                        :link="url('/games?tab=vibra')"
+                    />
 
-                    <div class="row row-cols-3 row-cols-md-6 mt-3">
-                        @foreach($gamesVibra as $vibra)
-                            <div class="col mb-3">
-                                <a href="{{ route('web.vibragames.show', ['id' => $vibra->game_id]) }}" class="inner-loop-elementos">
-                                    <img src="{{ asset('storage/'.$vibra->game_cover) }}" alt="{{ $vibra->name }}" class="img-fluid rounded-3">
-                                </a>
-                            </div>
-                        @endforeach
-                    </div>
+                    <x-game-grid 
+                        :games="$gamesVibra" 
+                        columns="3"
+                    />
                 @endif
 
-                <div class="mt-5">
-                    @include('includes.title', ['link' => url('como-funciona'), 'title' => 'F.A.Q', 'icon' => 'fa-light fa-circle-info', 'labelLink' => 'Saiba mais'])
-                </div>
+                <!-- FAQ -->
+                <x-section-title 
+                    title="F.A.Q" 
+                    :link="url('como-funciona')"
+                    icon="fa-light fa-circle-info"
+                    linkText="Saiba mais"
+                />
 
                 @include('web.home.sections.faq')
 
                 @include('includes.footer')
-
             </div>
         </div>
     </div>
