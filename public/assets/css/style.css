@@ -1008,34 +1008,36 @@ a, a:hover {
         bottom: 0;
         left: 0;
         right: 0;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 50%, transparent 100%);
-        padding: 8px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.85) 60%, transparent 100%);
+        padding: 10px 8px 8px 8px;
         border-radius: 0 0 8px 8px;
     }
     
     .game-info-badge {
         display: flex;
         align-items: center;
-        gap: 5px;
-        margin-bottom: 4px;
+        gap: 4px;
+        margin-bottom: 3px;
     }
     
     .game-info-badge img {
-        width: 16px !important;
-        height: 16px !important;
+        width: 14px !important;
+        height: 14px !important;
     }
     
     .game-info-badge span {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         color: #ffffff;
         font-weight: 500;
+        text-transform: capitalize;
     }
     
     .game-info-value {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         font-weight: 700;
-        color: #3BC117;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        color: #ffffff;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+        letter-spacing: 0.3px;
     }
 }
 
