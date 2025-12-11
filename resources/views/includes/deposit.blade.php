@@ -244,7 +244,8 @@
 
         /// Handle Button
         function handleButtonClick(event) {
-            const amountValue = event.target.textContent.replace('R$ ', '');  // Obtemos o valor sem o prefixo 'R$ '
+            let amountValue = event.target.textContent.replace('R$ ', '');  // Obtemos o valor sem o prefixo 'R$ '
+            amountValue = amountValue.replace(/\./g, '').replace(',', '.');  // Remove separador de milhares e converte vírgula para ponto
             document.querySelector('input[name="amount"]').value = amountValue;  // Atualizamos o valor do input
         }
 
