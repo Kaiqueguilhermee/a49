@@ -423,7 +423,7 @@ section.modelo-destaque-jogos .inner-super-banner img {
     opacity: .8;
 }
 .inner-loop-elementos img{
-    height: 231px;
+    height: auto;
     object-fit: cover;
     width: 100%;
 }
