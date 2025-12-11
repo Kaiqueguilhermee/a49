@@ -939,9 +939,9 @@ a, a:hover {
     .row-cols-3 .col, .row-cols-md-6 .col,
     .row-cols-3 .caixa-loop-elementos, .row-cols-md-6 .caixa-loop-elementos {
         flex: 0 0 auto !important;
-        width: 100px !important;
-        min-width: 100px !important;
-        max-width: 100px !important;
+        width: 140px !important;
+        min-width: 140px !important;
+        max-width: 140px !important;
         padding: 0 !important;
         margin: 0 !important;
     }
