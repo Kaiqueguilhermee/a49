@@ -957,8 +957,8 @@ a, a:hover {
     
     .row-cols-3 img, .row-cols-md-6 img,
     .caixa-loop-elementos img, .inner-loop-elementos img {
-        width: 100% !important;
-        height: auto !important;
+        width: 100% ;
+        height: auto ;
         border-radius: 8px !important;
     }
     
