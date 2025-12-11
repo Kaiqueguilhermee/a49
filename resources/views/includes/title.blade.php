@@ -1,6 +1,10 @@
 <div class="header-box">
     <div class="header-title">
-        <i class="{{ $icon }}" style="font-size: 23px;margin-right: 10px;color: #65cb24;"></i>
+        @if($title == '+Jogados Da Semana')
+            <img src="https://cdn.7games.bet.br/content/assets/icons/real-money.png?q=0&lossless=1&h=20&w=20" alt="Moeda" style="width: 23px; height: 23px; margin-right: 10px;">
+        @else
+            <i class="{{ $icon }}" style="font-size: 23px;margin-right: 10px;color: #65cb24;"></i>
+        @endif
         <h4>{{ $title }}</h4>
     </div>
     <div>
