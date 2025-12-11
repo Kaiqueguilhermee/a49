@@ -416,6 +416,7 @@ section.modelo-destaque-jogos .inner-super-banner img {
     position: relative;
     display: block;
     width: 100%;
+    height: auto;
     margin-bottom: 20px;
 }
 .inner-loop-elementos:hover{
