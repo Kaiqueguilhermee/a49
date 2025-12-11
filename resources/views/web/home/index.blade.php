@@ -92,7 +92,7 @@
                 @if(isset($topTrendGames) && count($topTrendGames) > 0)
                     @include('includes.title', ['link' => url('/games?tab=all'), 'title' => '+Jogados Da Semana', 'icon' => 'fa-duotone fa-gamepad-modern'])
 
-                    <div class="row row-cols-3 row-cols-md-6 mt-3">
+                    <div class="row row-cols-3 row-cols-md-6 mt-3 scroll-horizontal-mobile">
                         @foreach($topTrendGames as $game)
                             <div class="col caixa-loop-elementos">
                                 <a href="{{ route('web.play', ['uuid' => $game->uuid]) }}" class="inner-loop-elementos">

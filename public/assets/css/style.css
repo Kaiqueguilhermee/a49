@@ -921,8 +921,8 @@ a, a:hover {
         height: 120px !important;
     }
     
-    /* Transformar grid de jogos em scroll horizontal no mobile */
-    .row-cols-3, .row-cols-md-6 {
+    /* Transformar grid de jogos em scroll horizontal no mobile - APENAS +Jogados Da Semana */
+    .scroll-horizontal-mobile {
         display: flex !important;
         flex-wrap: nowrap !important;
         overflow-x: auto !important;
@@ -936,8 +936,8 @@ a, a:hover {
         padding-right: 15px !important;
     }
     
-    .row-cols-3 .col, .row-cols-md-6 .col,
-    .row-cols-3 .caixa-loop-elementos, .row-cols-md-6 .caixa-loop-elementos {
+    .scroll-horizontal-mobile .col,
+    .scroll-horizontal-mobile .caixa-loop-elementos {
         flex: 0 0 auto !important;
         width: 140px !important;
         min-width: 140px !important;
@@ -946,8 +946,9 @@ a, a:hover {
         margin: 0 !important;
     }
     
-    .row-cols-3 .col a, .row-cols-md-6 .col a,
-    .caixa-loop-elementos a, .inner-loop-elementos {
+    .scroll-horizontal-mobile .col a,
+    .scroll-horizontal-mobile .caixa-loop-elementos a,
+    .scroll-horizontal-mobile .inner-loop-elementos {
         position: relative !important;
         display: block !important;
         width: 100% !important;
@@ -955,19 +956,20 @@ a, a:hover {
         margin-bottom: 20px !important;
     }
     
-    .row-cols-3 img, .row-cols-md-6 img,
-    .caixa-loop-elementos img, .inner-loop-elementos img {
+    .scroll-horizontal-mobile img,
+    .scroll-horizontal-mobile .caixa-loop-elementos img,
+    .scroll-horizontal-mobile .inner-loop-elementos img {
         width: 100% ;
         height: auto ;
         border-radius: 8px !important;
     }
     
     /* Estilizar scrollbar no mobile */
-    .row-cols-3::-webkit-scrollbar, .row-cols-md-6::-webkit-scrollbar {
+    .scroll-horizontal-mobile::-webkit-scrollbar {
         height: 4px;
     }
     
-    .row-cols-3::-webkit-scrollbar-track, .row-cols-md-6::-webkit-scrollbar-track {
+    .scroll-horizontal-mobile::-webkit-scrollbar-track {
         background: rgba(255, 255, 255, 0.1);
         border-radius: 10px;
     }
