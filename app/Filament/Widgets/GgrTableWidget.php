@@ -2,7 +2,7 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\GameLog;
+use App\Models\GGRGamesFiver;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables;
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 class GgrTableWidget extends BaseWidget
 {
 
-    protected static ?string $heading = 'GGR Drakon';
+    protected static ?string $heading = 'GGR Fivers';
 
     protected static ?int $navigationSort = -1;
 
@@ -27,19 +27,20 @@ class GgrTableWidget extends BaseWidget
     public function table(Table $table): Table
     {
         return $table
-            ->query(GameLog::query())
+            ->query(GGRGamesFiver::query())
             ->defaultSort('created_at', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('time')
-                    ->label('Tempo'),
-                Tables\Columns\TextColumn::make('game_id')
-                    ->label('ID do Jogo')
+                Tables\Columns\TextColumn::make('player_id')
+                    ->label('Player'),
+                Tables\Columns\TextColumn::make('game')
+                    ->label('Jogo')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('ip')
-                    ->label('IP')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('shop_id')
-                    ->label('Shop ID'),
+                Tables\Columns\TextColumn::make('balance_bet')
+                    ->money('BRL')
+                    ->label('Aposta'),
+                Tables\Columns\TextColumn::make('balance_win')
+                    ->money('BRL')
+                    ->label('Ganho'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d/m/Y H:i:s')
                     ->label('Data')
