@@ -948,10 +948,11 @@ a, a:hover {
     
     .row-cols-3 .col a, .row-cols-md-6 .col a,
     .caixa-loop-elementos a, .inner-loop-elementos {
+        position: relative !important;
         display: block !important;
         width: 100% !important;
         height: auto !important;
-        overflow: hidden !important;
+        margin-bottom: 20px !important;
     }
     
     .row-cols-3 img, .row-cols-md-6 img,

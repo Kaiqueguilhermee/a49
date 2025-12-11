@@ -19,7 +19,7 @@
         </h2>
         <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
             <div class="accordion-body">
-                Na nossa plataforma, o valor mínimo de saque é de 10 reais, sem limite máximo estabelecido.
+                Na nossa plataforma, o valor mínimo de saque é de <strong>R$ {{ number_format(config('setting')['min_withdrawal'], 2, ',', '.') }}</strong>, e o valor máximo é de <strong>R$ {{ number_format(config('setting')['max_withdrawal'], 2, ',', '.') }}</strong>.
             </div>
         </div>
     </div>
@@ -31,11 +31,10 @@
         </h2>
         <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
             <div class="accordion-body">
-                <p>No nosso programa de CPA, as comissões são definidas da seguinte forma:</p>
-
+                <p>No nosso programa de CPA (Custo por Aquisição), oferecemos comissões para afiliados que indicam novos jogadores para nossa plataforma.</p>
                 <br>
-                <p><i class="fa-solid fa-check mr-2"></i> Para perfis de grande alcance, a comissão é de R$40, com um valor de Baseline de R$70.</p>
-                <p><i class="fa-solid fa-check mr-2"></i> Para outros perfis, o CPA é de R$20, com um valor de Baseline de R$40.</p>
+                <p><i class="fa-solid fa-check mr-2"></i> As comissões variam de acordo com o perfil do afiliado e são configuradas individualmente.</p>
+                <p><i class="fa-solid fa-check mr-2"></i> Para participar do programa de afiliados, entre em contato com nosso suporte através do painel.</p>
             </div>
         </div>
     </div>
