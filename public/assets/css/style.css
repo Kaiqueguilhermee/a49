@@ -922,8 +922,7 @@ a, a:hover {
     }
     
     /* Transformar grid de jogos em scroll horizontal no mobile */
-    .scroll-horizontal-mobile,
-    .d-steam-cards {
+    .scroll-horizontal-mobile {
         display: flex !important;
         flex-wrap: nowrap !important;
         overflow-x: auto !important;
@@ -938,12 +937,29 @@ a, a:hover {
     }
     
     .scroll-horizontal-mobile .col,
-    .scroll-horizontal-mobile .caixa-loop-elementos,
-    .d-steam-cards .d-steam-card-wrapper {
+    .scroll-horizontal-mobile .caixa-loop-elementos {
         flex: 0 0 auto !important;
         width: 160px !important;
         min-width: 160px !important;
         max-width: 160px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    /* Grid de 2 colunas para "Todos os Jogos" no mobile */
+    .d-steam-cards {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+        justify-content: space-between !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .d-steam-cards .d-steam-card-wrapper {
+        flex: 0 0 calc(50% - 5px) !important;
+        width: calc(50% - 5px) !important;
+        max-width: calc(50% - 5px) !important;
         padding: 0 !important;
         margin: 0 !important;
     }
