@@ -996,6 +996,12 @@ a, a:hover {
         background: rgba(255, 255, 255, 0.3);
         border-radius: 10px;
     }
+    
+    /* Sobrescrever Bootstrap row-cols-3 para mostrar 2 colunas no mobile */
+    .row-cols-3 > * {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+    }
 }
 
 .d-steam-card {
