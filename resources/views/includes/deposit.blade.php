@@ -155,8 +155,15 @@
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json())
+                .then(response => {
+                    console.log('Response Status:', response.status);
+                    if(!response.ok) {
+                        throw new Error('HTTP '+response.status);
+                    }
+                    return response.json();
+                })
                 .then(data => {
+                    console.log('Response Data:', data);
                     if(data.status) {
                         var divQrcode = document.getElementById('qrcode-container');
                         divQrcode.style.display = 'block';
@@ -178,6 +185,7 @@
                             consultStatusTransaction(data.idTransaction);
                         }, 5000);
                     }else{
+                        console.log('Status false. Errors:', data.errors || data.error);
                         if(data.error != undefined) {
                             iziToast.show({
                                 title: 'Atenção',
@@ -188,8 +196,8 @@
                                 backgroundColor: '#b51408',
                                 position: 'topRight'
                             });
-                        }else{
-                            Object.entries(data).forEach(([key, value]) => {
+                        }else if(data.errors != undefined){
+                            Object.entries(data.errors).forEach(([key, value]) => {
                                 iziToast.show({
                                     title: 'Atenção',
                                     message: value[0],
@@ -200,6 +208,16 @@
                                     position: 'topRight'
                                 });
                             });
+                        }else{
+                            iziToast.show({
+                                title: 'Erro',
+                                message: 'Erro desconhecido. Verifique o console.',
+                                theme: 'dark',
+                                icon: 'fa-regular fa-circle-exclamation',
+                                iconColor: '#ffffff',
+                                backgroundColor: '#b51408',
+                                position: 'topRight'
+                            });
                         }
 
                     }
@@ -207,7 +225,17 @@
                     loadingElement.style.display = 'none';
                 })
                 .catch(error => {
+                    console.error('Fetch Error:', error);
                     loadingElement.style.display = 'none';
+                    iziToast.show({
+                        title: 'Erro',
+                        message: 'Erro ao conectar: ' + error.message,
+                        theme: 'dark',
+                        icon: 'fa-regular fa-circle-exclamation',
+                        iconColor: '#ffffff',
+                        backgroundColor: '#b51408',
+                        position: 'topRight'
+                    });
                 })
                 .finally(() => {
 
