@@ -2,7 +2,7 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\GGRGamesFiver;
+use App\Models\GameLog;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables;
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 class GgrTableWidget extends BaseWidget
 {
 
-    protected static ?string $heading = 'GGR Fivers';
+    protected static ?string $heading = 'GGR Drakon';
 
     protected static ?int $navigationSort = -1;
 
@@ -27,24 +27,21 @@ class GgrTableWidget extends BaseWidget
     public function table(Table $table): Table
     {
         return $table
-            ->query(GGRGamesFiver::query())
+            ->query(GameLog::query())
             ->defaultSort('created_at', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label('Usuário'),
-                Tables\Columns\TextColumn::make('provider')
-                    ->label('Provedor')
+                Tables\Columns\TextColumn::make('time')
+                    ->label('Tempo'),
+                Tables\Columns\TextColumn::make('game_id')
+                    ->label('ID do Jogo')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('game')
-                    ->label('Jogo')
+                Tables\Columns\TextColumn::make('ip')
+                    ->label('IP')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('balance_bet')
-                    ->money('BRL')
-                    ->label('Saldo Aposta'),
-                Tables\Columns\TextColumn::make('balance_win')
-                    ->money('BRL')
-                    ->label('Saldo Vitoria'),
-                Tables\Columns\TextColumn::make('dateHumanReadable')
+                Tables\Columns\TextColumn::make('shop_id')
+                    ->label('Shop ID'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime('d/m/Y H:i:s')
                     ->label('Data')
             ])
             ->filters([

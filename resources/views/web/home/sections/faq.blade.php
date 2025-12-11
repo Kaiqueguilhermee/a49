@@ -7,7 +7,7 @@
         </h2>
         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
             <div class="accordion-body">
-                Na nossa plataforma, o valor mínimo de depósito é de <strong>R$ 10 reais</strong>.
+                Na nossa plataforma, o valor mínimo de depósito é de <strong>R$ {{ number_format(config('setting')['min_deposit'], 2, ',', '.') }}</strong>.
             </div>
         </div>
     </div>
