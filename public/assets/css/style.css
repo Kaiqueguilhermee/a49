@@ -996,6 +996,26 @@ a, a:hover {
         flex: 0 0 50% !important;
         max-width: 50% !important;
     }
+    
+    /* Badge de moeda nos cards - mobile */
+    .game-badge-money {
+        position: absolute;
+        bottom: 8px;
+        left: 8px;
+        background-color: rgba(0, 0, 0, 0.7);
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+    }
+    
+    .game-badge-money img {
+        width: 20px !important;
+        height: 20px !important;
+    }
 }
 
 .d-steam-card {

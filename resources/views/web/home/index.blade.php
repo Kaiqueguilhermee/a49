@@ -97,6 +97,9 @@
                             <div class="col caixa-loop-elementos">
                                 <a href="{{ route('web.play', ['uuid' => $game->uuid]) }}" class="inner-loop-elementos">
                                     <img src="{{ str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="img-fluid rounded-3">
+                                    <span class="game-badge-money">
+                                        <img src="https://cdn.7games.bet.br/content/assets/icons/real-money.png?q=0&lossless=1&h=20&w=20" alt="Dinheiro Real">
+                                    </span>
                                 </a>
                             </div>
                         @endforeach
