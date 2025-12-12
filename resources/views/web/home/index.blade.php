@@ -73,7 +73,7 @@
                     </div>
 
                     <div class="grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
-                        @foreach(\App\Models\Banner::where('type', 'home')->get() as $banner)
+                        @foreach(\App\Models\Banner::where('type', 'home')->take(6)->get() as $banner)
                             <a href="{{ $banner->link }}" class="game-card">
                                 <img src="{{ asset('storage/'.$banner->image) }}" alt="" class="game-card-image">
                             </a>
@@ -81,7 +81,7 @@
                     </div>
 
                     <div class="d-steam-cards js-steamCards">
-                        @foreach($gamesExclusives as $gamee)
+                        @foreach($gamesExclusives->take(6) as $gamee)
                             <a href="{{ route('web.vgames.show', ['game' => $gamee->uuid]) }}" class="d-steam-card-wrapper">
                                 <div class="d-steam-card js-steamCard" style="background-image: url('{{ asset('storage/'.$gamee->cover) }}')"></div>
                             </a>
@@ -97,7 +97,7 @@
                     @include('includes.title', ['link' => url('/games?tab=all'), 'title' => 'Mais pagou Hoje'])
 
                     <div class="grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6 md:grid md:grid-flow-row scroll-mobile">
-                        @foreach($topTrendGames as $game)
+                        @foreach($topTrendGames->take(6) as $game)
                             <a href="{{ route('web.play', ['uuid' => $game->uuid]) }}" class="game-card">
                                 <img src="{{ str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="game-card-image">
                             </a>
@@ -113,7 +113,7 @@
                             @include('includes.title', ['link' => url('/games?provider='.$provider->code.'&tab=fivers'), 'title' => $provider->name])
 
                             <div class="grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
-                                @foreach($provider->games->where('status', 1) as $gameProvider)
+                                @foreach($provider->games->where('status', 1)->take(6) as $gameProvider)
                                     <a href="{{ route('web.fivers.show', ['code' => $gameProvider->game_code]) }}" class="game-card">
                                         <img src="{{ asset('storage/'.$gameProvider->banner) }}" alt="{{ $gameProvider->game_name }}" class="game-card-image">
                                     </a>
@@ -128,7 +128,7 @@
                     @include('includes.title', ['link' => url('/games?tab=all'), 'title' => 'Todos os Jogos'])
 
                     <div class="grid grid-cols-2 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
-                        @foreach($games as $game)
+                        @foreach($games->take(6) as $game)
                             @php
                                 $service = strtolower($game->provider_service ?? $game->provider ?? '');
                                 $isDrakon = $service === 'drakon';
@@ -153,7 +153,7 @@
                     @include('includes.title', ['link' => url('/games?tab=vibra'), 'title' => 'Jogos Vibra'])
 
                     <div class="grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
-                        @foreach($gamesVibra as $vibra)
+                        @foreach($gamesVibra->take(6) as $vibra)
                             <a href="{{ route('web.vibragames.show', ['id' => $vibra->game_id]) }}" class="game-card">
                                 <img src="{{ asset('storage/'.$vibra->game_cover) }}" alt="{{ $vibra->name }}" class="game-card-image">
                             </a>
