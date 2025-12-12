@@ -128,30 +128,36 @@ trait SuitpayTrait
 
 	public static function finalizePayment($gs_20): bool
 	{
-		$qm_21 = Transaction::where(base64_decode('cGF5bWVudF9pZA=='), $gs_20)->where(base64_decode('c3RhdHVz'), 0)->first();
-		$cy_3 = \Helper::getSetting();
-		if (!empty($qm_21)) {
-			$cr_22 = User::find($qm_21->$sm_23);
-			if (!empty($cr_22) && !empty($cr_22->$yz_24)) {
-				$ir_25 = User::find($cr_22->$yz_24);
-				if (!empty($ir_25)) {
-					// ...
-				}
-			}
-			$ag_26 = Wallet::where(base64_decode('dXNlcl9pZA=='), $qm_21->$sm_23)->first();
-			if (!empty($ag_26)) {
-				$xa_27 = Transaction::where(base64_decode('dXNlcl9pZA=='), $qm_21->$sm_23)->count();
-				if ($xa_27 <= 1) {
-					$lc_28 = \Helper::porcentagem_xn($cy_3->$rt_29, $qm_21->$pm_30);
-					$ag_26->increment(base64_decode('YmFsYW5jZV9ib251cw=='), $lc_28);
-				}
-				if ($ag_26->increment(base64_decode('YmFsYW5jZQ=='), $qm_21->$pm_30)) {
-					$dk_31 = Deposit::where(base64_decode('cGF5bWVudF9pZA=='), $gs_20)->first();
-					if (!empty($dk_31)) {
-						$dk_31->update([base64_decode('c3RhdHVz') => 1]);
+			$qm_21 = Transaction::where(base64_decode('cGF5bWVudF9pZA=='), $gs_20)->where(base64_decode('c3RhdHVz'), 0)->first();
+			$cy_3 = \Helper::getSetting();
+			if (!empty($qm_21)) {
+				// user_id
+				$cr_22 = User::find($qm_21->user_id);
+				// inviter (afiliado)
+				if (!empty($cr_22) && !empty($cr_22->inviter)) {
+					$ir_25 = User::find($cr_22->inviter);
+					if (!empty($ir_25)) {
+						// ...
 					}
-					if ($qm_21->update([base64_decode('c3RhdHVz') => 1])) {
-						self::updateAffiliate($qm_21->$jm_32, $qm_21->$sm_23, $qm_21->$pm_30);
+				}
+				$ag_26 = Wallet::where(base64_decode('dXNlcl9pZA=='), $qm_21->user_id)->first();
+				if (!empty($ag_26)) {
+					$xa_27 = Transaction::where(base64_decode('dXNlcl9pZA=='), $qm_21->user_id)->count();
+					// rt_29 = 'rollover' (se existir em $cy_3), pm_30 = 'price'
+					if ($xa_27 <= 1 && isset($cy_3->rollover)) {
+						$lc_28 = \Helper::porcentagem_xn($cy_3->rollover, $qm_21->price);
+						$ag_26->increment(base64_decode('YmFsYW5jZV9ib251cw=='), $lc_28);
+					}
+					if ($ag_26->increment(base64_decode('YmFsYW5jZQ=='), $qm_21->price)) {
+						$dk_31 = Deposit::where(base64_decode('cGF5bWVudF9pZA=='), $gs_20)->first();
+						if (!empty($dk_31)) {
+							$dk_31->update([base64_decode('c3RhdHVz') => 1]);
+						}
+						// jm_32 = 'referral_id' (se existir), sm_23 = 'user_id', pm_30 = 'price'
+						if ($qm_21->update([base64_decode('c3RhdHVz') => 1])) {
+							self::updateAffiliate($qm_21->referral_id ?? null, $qm_21->user_id, $qm_21->price);
+							return false;
+						}
 						return false;
 					}
 					return false;
@@ -159,8 +165,6 @@ trait SuitpayTrait
 				return false;
 			}
 			return false;
-		}
-		return false;
 	}
 
 	private static function generateDeposit($gs_20, $ar_33)
