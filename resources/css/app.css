@@ -269,6 +269,7 @@
     align-items: center;
     justify-content: flex-start;
     gap: 8px;
+    width: 50px;
     background: linear-gradient(90deg, rgba(255, 215, 0, 0.15) 0%, transparent 100%);
     border-radius: 12px;
     padding: 16px 10px;
