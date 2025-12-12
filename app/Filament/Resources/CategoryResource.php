@@ -47,6 +47,10 @@ class CategoryResource extends Resource
                             ->directory('uploads')
                             ->visibility('public')
                             ->columnSpanFull(),
+                        Forms\Components\Toggle::make('show_on_home')
+                            ->label('Exibir na Home?')
+                            ->helperText('Se marcado, os jogos desta categoria aparecerão na página inicial.')
+                            ->columnSpanFull(),
                         Forms\Components\MultiSelect::make('games')
                             ->label('Jogos desta categoria')
                             ->options(\App\Models\Game::where('type', 'slots')->pluck('name', 'id'))
