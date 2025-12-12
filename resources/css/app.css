@@ -130,26 +130,29 @@
     text-transform: uppercase;
 }
 
-.last-winners-wrapper {
-    display: flex;
-    gap: 0.75rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
+.last-winners-carousel {
+    overflow: hidden;
+    position: relative;
     padding-bottom: 8px;
 }
 
-.last-winners-wrapper::-webkit-scrollbar {
-    height: 4px;
+.last-winners-track {
+    display: flex;
+    gap: 0.75rem;
+    animation: scrollWinners 60s linear infinite;
 }
 
-.last-winners-wrapper::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+.last-winners-track:hover {
+    animation-play-state: paused;
 }
 
-.last-winners-wrapper::-webkit-scrollbar-thumb {
-    background: #65cb24;
-    border-radius: 4px;
+@keyframes scrollWinners {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 .last-winner-item {
@@ -158,8 +161,7 @@
     background: linear-gradient(135deg, rgba(101, 203, 36, 0.1) 0%, rgba(101, 203, 36, 0.05) 100%);
     border: 1px solid rgba(101, 203, 36, 0.2);
     border-radius: 12px;
-    padding: 12px;
-    scroll-snap-align: start;
+    padding: 8px;
     position: relative;
     transition: transform 0.2s ease;
 }
@@ -169,14 +171,25 @@
     border-color: rgba(101, 203, 36, 0.4);
 }
 
+.last-winner-game-image {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
 .last-winner-badge {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    background: rgba(255, 215, 0, 0.2);
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 215, 0, 0.9);
     padding: 4px 8px;
     border-radius: 6px;
     font-size: 0.75rem;
+    color: #000;
+    font-weight: 700;
+    z-index: 1;
 }
 
 .last-winner-info {
@@ -207,12 +220,16 @@
 }
 
 @media (max-width: 768px) {
-    .last-winners-wrapper::-webkit-scrollbar {
-        display: none;
-    }
-    
     .last-winner-item {
         width: 140px;
+    }
+    
+    .last-winner-game-image {
+        height: 90px;
+    }
+    
+    .last-winners-track {
+        animation-duration: 40s;
     }
 }
 
