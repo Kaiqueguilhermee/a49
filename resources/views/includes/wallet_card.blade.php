@@ -201,22 +201,18 @@
                                 rollover = {{ auth()->user()->wallet->balance_bonus_rollover ?? 0 }};
                             }
                             let msg = 'Você precisa apostar mais <strong>R$ ' + rollover.toFixed(2).replace('.', ',') + '</strong> para liberar o saque.';
-                            if(document.getElementById('rollover-modal')) {
-                                $('#rollover-modal').iziModal('open');
-                                document.getElementById('rollover-modal-message').innerHTML = msg;
-                            } else {
-                                let modalHtml = `<div id=\"rollover-modal\" class=\"iziModal\" data-izimodal-loop=\"\">\n                                    <div class=\"modal-dialog rounded-2xl\">\n                                        <div class=\"modal-content bg-yellow-100 text-yellow-900 p-6 text-center rounded-2xl border-4 border-yellow-400 shadow-lg\">\n                                            <div class=\"mb-3\"><i class=\"fa-solid fa-triangle-exclamation fa-2x text-yellow-600\"></i></div>\n                                            <div id=\"rollover-modal-message\" class=\"mb-3 font-semibold text-lg\">${msg}</div>\n                                            <a href=\"/\" class=\"bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-4 w-full rounded-lg transition shadow\">JOGAR AGORA</a>\n                                            <div class=\"mt-2 text-sm text-yellow-800\">Aposte o valor pendente para liberar o saque!</div>\n                                        </div>\n                                    </div>\n                                </div>`;
-                                $('body').append(modalHtml);
-                                $('#rollover-modal').iziModal({
-                                    title: 'Atenção',
-                                    headerColor: '#facc15', // amarelo Tailwind
-                                    theme: 'light',
-                                    width: 700,
-                                    overlayClose: true,
-                                    zindex: 99999
-                                });
-                                $('#rollover-modal').iziModal('open');
-                            }
+                            iziToast.show({
+                                title: 'Atenção',
+                                message: msg,
+                                theme: 'light',
+                                icon: 'fa-solid fa-triangle-exclamation',
+                                iconColor: '#facc15',
+                                backgroundColor: '#fef9c3',
+                                messageColor: '#b45309',
+                                titleColor: '#b45309',
+                                position: 'topRight',
+                                timeout: 5000
+                            });
                         } else if(data.error != undefined) {
                             iziToast.show({
                                 title: 'Atenção',
