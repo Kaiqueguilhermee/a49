@@ -86,7 +86,6 @@
                 @endif
 
                 <br>
-                <br>
 
                 <!-- TopTrend Gaming - Jogos em Destaque -->
                 @if(isset($topTrendGames) && count($topTrendGames) > 0)
