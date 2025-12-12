@@ -82,15 +82,14 @@ class WalletController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function requestWithdrawal(Request $request)
-
-            // Bloquear saque se houver rollover pendente
-            if (auth()->user()->wallet->balance_bonus_rollover > 0) {
-                return response()->json([
-                    'status' => false,
-                    'error' => 'Você precisa apostar o valor do seu depósito antes de sacar (rollover pendente).'
-                ], 400);
-            }
     {
+        // Bloquear saque se houver rollover pendente
+        if (auth()->user()->wallet->balance_bonus_rollover > 0) {
+            return response()->json([
+                'status' => false,
+                'error' => 'Você precisa apostar o valor do seu depósito antes de sacar (rollover pendente).'
+            ], 400);
+        }
         $setting = \Helper::getSetting();
         $rules = [
             'amount' => ['required', 'numeric', 'min:'.$setting->min_withdrawal, 'max:'.$setting->max_withdrawal],
