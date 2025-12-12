@@ -102,25 +102,103 @@
     }
 }
 
-/* Winners Mobile - Apenas para dispositivos móveis */
-.winners-mobile-container {
-    overflow: hidden;
-    background: linear-gradient(90deg, rgba(54, 212, 126, 0.1) 0%, transparent 100%);
-    border-radius: 8px;
-    padding: 8px 0;
+/* Top Winners Mobile */
+.top-winners-container-mobile {
+    margin: 1rem 0;
 }
 
-.winners-mobile-track {
+.top-winners-tabs-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 1rem;
+}
+
+.top-winners-tabs-text {
     display: flex;
-    gap: 1rem;
-    animation: scrollWinnersMobile 50s linear infinite;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
 }
 
-.winners-mobile-track:hover {
+.top-winners-tabs-text img {
+    width: 20px;
+    height: 20px;
+}
+
+.top-winners-tabs-text p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+}
+
+.top-winners-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.top-winners-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.top-winners-tab {
+    flex-shrink: 0;
+    padding: 6px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.top-winners-tab.active {
+    background: #65cb24;
+    color: white;
+    font-weight: 600;
+}
+
+.top-winners-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.15) 0%, transparent 100%);
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.top-winners-header img {
+    width: 28px;
+    height: 28px;
+}
+
+.top-winners-header p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #FFD700;
+    text-transform: uppercase;
+}
+
+.top-winners-scroll {
+    overflow: hidden;
+}
+
+.top-winners-track {
+    display: flex;
+    gap: 12px;
+    animation: scrollTopWinners 60s linear infinite;
+}
+
+.top-winners-track:hover {
     animation-play-state: paused;
 }
 
-@keyframes scrollWinnersMobile {
+@keyframes scrollTopWinners {
     0% {
         transform: translateX(0);
     }
@@ -129,42 +207,92 @@
     }
 }
 
-.winner-mobile-item {
+.top-winner-card {
     flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    width: 180px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(101, 203, 36, 0.2);
-    border-radius: 8px;
-    padding: 8px 12px;
-    min-width: 200px;
+    border-radius: 12px;
+    overflow: hidden;
 }
 
-.winner-info-left {
-    flex: 1;
+.top-winner-game-img {
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
 }
 
-.winner-name {
+.top-winner-game-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.top-winner-info {
+    padding: 10px;
+}
+
+.top-winner-player {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.top-winner-avatar {
+    position: relative;
+    width: 32px;
+    height: 32px;
+}
+
+.avatar-roll {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: rotateRoll 3s linear infinite;
+}
+
+@keyframes rotateRoll {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.avatar-img {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.player-name {
     font-size: 0.85rem;
     font-weight: 600;
     color: white;
-    margin: 0 0 4px 0;
+    margin: 0;
+}
+
+.game-name {
+    display: block;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .winner-amount {
     font-size: 0.95rem;
     font-weight: 700;
-    color: #36d47e;
+    color: #65cb24;
     margin: 0;
-}
-
-.winner-game-img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 6px;
-    border: 2px solid rgba(101, 203, 36, 0.3);
 }
 
 /* Last Winners Component */
