@@ -108,7 +108,7 @@
                     @foreach($categoriesHome as $category)
                         @if($category->gamesSlotgrator->count() > 0)
                         <br>
-                            <div class="mt-8">
+                            <div >
                                 @include('includes.title', ['link' => url('/category/'.$category->slug), 'title' => $category->name])
                             </div>
                             <div class="scroll-mobile grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
