@@ -61,8 +61,10 @@
                     </div>
                 </form>
 
-                <!-- Últimos Ganhos -->
-                @include('components.last-winners')
+                <!-- Ganhadores Mobile -->
+                <div class="block md:hidden mb-4">
+                    @include('components.winners-mobile')
+                </div>
 
                 <!-- Jogos da plataforma -->
                 @if(count($gamesExclusives) > 0)
