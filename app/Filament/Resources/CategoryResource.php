@@ -51,6 +51,12 @@ class CategoryResource extends Resource
                             ->directory('uploads')
                             ->visibility('public')
                             ->columnSpanFull(),
+                        Forms\Components\MultiSelect::make('games')
+                            ->label('Jogos desta categoria')
+                            ->options(\App\Models\Game::where('type', 'slots')->pluck('name', 'id'))
+                            ->relationship('games', 'name')
+                            ->helperText('Selecione os jogos que deseja associar a esta categoria. Somente jogos do tipo "slots" aparecem aqui.')
+                            ->columnSpanFull(),
                     ])
                 ]);
     }
