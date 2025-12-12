@@ -143,6 +143,9 @@ class GameResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('provider')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label('Categoria')
+                    ->sortable(),
                 Tables\Columns\IconColumn::make('technology')
                     ->boolean(),
                 Tables\Columns\IconColumn::make('has_lobby')
@@ -228,6 +231,20 @@ class GameResource extends Resource
                             Game::where('id', $id)->update(['active' => 0]);
                         });
                     }),
+                Tables\Actions\BulkAction::make('Definir Categoria')
+                    ->icon('heroicon-o-squares-plus')
+                    ->form([
+                        Forms\Components\Select::make('category_id')
+                            ->label('Categoria')
+                            ->options(Category::pluck('name', 'id'))
+                            ->required()
+                    ])
+                    ->action(function($records, $data) {
+                        foreach ($records as $record) {
+                            $record->update(['category_id' => $data['category_id']]);
+                        }
+                    })
+                    ->requiresConfirmation(),
                 Tables\Actions\BulkActionGroup::make(env('APP_DEMO') ? [] :[
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
