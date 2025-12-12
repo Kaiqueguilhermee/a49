@@ -102,11 +102,14 @@
                     </div>
                     <br>
                 @endif
+                
                 {{-- Categorias marcadas para home --}}
                 @if(isset($categoriesHome) && count($categoriesHome) > 0)
                     @foreach($categoriesHome as $category)
                         @if($category->gamesSlotgrator->count() > 0)
-                            @include('includes.title', ['link' => url('/category/'.$category->slug), 'title' => $category->name])
+                            <div class="mt-8">
+                                @include('includes.title', ['link' => url('/category/'.$category->slug), 'title' => $category->name])
+                            </div>
                             <div class="scroll-mobile grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
                                 @foreach($category->gamesSlotgrator->take(12) as $game)
                                     <a href="{{ route('web.play', ['uuid' => $game->uuid]) }}" class="game-card">
