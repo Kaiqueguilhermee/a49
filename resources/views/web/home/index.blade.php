@@ -69,7 +69,7 @@
                 <!-- Jogos da plataforma -->
                 @if(count($gamesExclusives) > 0)
                     <div class="mt-8">
-                        @include('includes.title', ['link' => url('/games?tab=exclusives'), 'title' => 'Jogos da Casa', 'icon' => 'fa-regular fa-gamepad-modern'])
+                        @include('includes.title', ['link' => url('/games?tab=exclusives'), 'title' => 'Jogos da Casa'])
                     </div>
 
                     <div class="grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
@@ -94,7 +94,7 @@
 
 
 
-                    @include('includes.title', ['link' => url('/games?tab=all'), 'title' => '+Jogados da semana', 'icon' => 'fa-duotone fa-gamepad-modern'])
+                    @include('includes.title', ['link' => url('/games?tab=all'), 'title' => 'MAIS PAGOU HOJE A49'])
 
                     <div class="grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6 md:grid md:grid-flow-row scroll-mobile">
                         @foreach($topTrendGames as $game)
@@ -110,7 +110,7 @@
                 @if(count($providers) > 0)
                     @foreach($providers as $provider)
                         @if($provider->games->where('status', 1)->count() > 0)
-                            @include('includes.title', ['link' => url('/games?provider='.$provider->code.'&tab=fivers'), 'title' => $provider->name, 'icon' => 'fa-duotone fa-gamepad-modern'])
+                            @include('includes.title', ['link' => url('/games?provider='.$provider->code.'&tab=fivers'), 'title' => $provider->name])
 
                             <div class="grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
                                 @foreach($provider->games->where('status', 1) as $gameProvider)
@@ -125,7 +125,7 @@
 
                 <!-- Slotegrator -->
                 @if(count($games) > 0)
-                    @include('includes.title', ['link' => url('/games?tab=all'), 'title' => 'Todos os Jogos', 'icon' => 'fa-duotone fa-gamepad-modern'])
+                    @include('includes.title', ['link' => url('/games?tab=all'), 'title' => 'Todos os Jogos'])
 
                     <div class="grid grid-cols-2 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
                         @foreach($games as $game)
@@ -150,7 +150,7 @@
                 <br>
 
                 @if(count($gamesVibra) > 0)
-                    @include('includes.title', ['link' => url('/games?tab=vibra'), 'title' => 'Jogos Vibra', 'icon' => 'fa-duotone fa-gamepad-modern'])
+                    @include('includes.title', ['link' => url('/games?tab=vibra'), 'title' => 'Jogos Vibra'])
 
                     <div class="grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
                         @foreach($gamesVibra as $vibra)
