@@ -94,7 +94,7 @@
 
 
 
-                    @include('includes.title', ['link' => url('/games?tab=all'), 'title' => 'MAIS PAGOU HOJE A49'])
+                    @include('includes.title', ['link' => url('/games?tab=all'), 'title' => 'Mais pagou'])
 
                     <div class="grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6 md:grid md:grid-flow-row scroll-mobile">
                         @foreach($topTrendGames as $game)
