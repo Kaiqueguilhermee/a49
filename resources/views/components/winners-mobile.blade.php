@@ -1,22 +1,46 @@
 @php
     $topGames = $topTrendGames ?? [];
-    $mockNames = ['Jefferson F***', 'Wu Z***', 'Celso L***', 'Marco S***', 'Jose M***', 'Cintia A***', 'Elayne C***', 'Matheus C***', 'Patricia G***', 'Bruno H***', 'Camila N***', 'Diego V***'];
     $avatars = range(1, 40);
-    
-    $mockWinners = [];
-    for ($i = 0; $i < 20; $i++) {
-        if (count($topGames) > 0) {
-            $game = $topGames[$i % count($topGames)];
-            $mockWinners[] = [
-                'name' => $mockNames[array_rand($mockNames)],
-                'game' => $game->name,
-                'amount' => 'R$ ' . number_format(rand(43, 154) * 1000 + rand(0, 999), 2, ',', '.'),
-                'image' => str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image),
-                'avatar' => $avatars[array_rand($avatars)]
-            ];
-        }
-    }
+    $periods = [
+        'hoje' => [
+            'names' => ['Jefferson F***', 'Wu Z***', 'Celso L***', 'Marco S***', 'Jose M***', 'Cintia A***', 'Elayne C***', 'Matheus C***'],
+            'min' => 600, 'max' => 3000
+        ],
+        '3dias' => [
+            'names' => ['Patricia G***', 'Bruno H***', 'Camila N***', 'Diego V***', 'Lucas S***', 'Fernanda A***', 'Rafael D***', 'Juliana R***'],
+            'min' => 3000, 'max' => 5000
+        ],
+        '7dias' => [
+            'names' => ['Amanda P***', 'Thiago M***', 'Gabriel F***', 'Larissa C***', 'Vinicius L***', 'Beatriz S***', 'Henrique T***', 'Sofia N***'],
+            'min' => 5000, 'max' => 8000
+        ],
+        '15dias' => [
+            'names' => ['Eduardo V***', 'Marina D***', 'Felipe R***', 'Aline B***', 'Gustavo H***', 'Isabela K***', 'Renato J***', 'Paula Q***'],
+            'min' => 8000, 'max' => 12000
+        ],
+        '30dias' => [
+            'names' => ['Otavio Z***', 'Simone W***', 'Danilo X***', 'Helena Y***', 'Ricardo U***', 'Tatiane I***', 'Murilo O***', 'Leticia P***'],
+            'min' => 12000, 'max' => 30000
+        ],
+    ];
+    $periodGames = [
+        'hoje' => array_slice($topGames, 0, 8),
+        '3dias' => array_slice($topGames, 8, 8),
+        '7dias' => array_slice($topGames, 16, 8),
+        '15dias' => array_slice($topGames, 24, 8),
+        '30dias' => array_slice($topGames, 32, 8),
+    ];
 @endphp
+<script>
+function setTopWinnersPeriod(period) {
+    document.querySelectorAll('.top-winners-tab').forEach(tab => tab.classList.remove('active'));
+    document.querySelector('.top-winners-tab[data-period="'+period+'"').classList.add('active');
+    document.querySelectorAll('.top-winners-track').forEach(track => {
+        track.style.display = 'none';
+    });
+    document.getElementById('top-winners-track-'+period).style.display = 'flex';
+}
+</script>
 
 <div class="top-winners-container-mobile">
     <!-- Tabs de Período -->
@@ -26,11 +50,11 @@
             <p>Período:</p>
         </div>
         <div class="top-winners-tabs">
-            <div class="top-winners-tab active">Hoje</div>
-            <div class="top-winners-tab">3 Dias</div>
-            <div class="top-winners-tab">7 Dias</div>
-            <div class="top-winners-tab">15 Dias</div>
-            <div class="top-winners-tab">30 Dias</div>
+            <div class="top-winners-tab active" data-period="hoje" onclick="setTopWinnersPeriod('hoje')">Hoje</div>
+            <div class="top-winners-tab" data-period="3dias" onclick="setTopWinnersPeriod('3dias')">3 Dias</div>
+            <div class="top-winners-tab" data-period="7dias" onclick="setTopWinnersPeriod('7dias')">7 Dias</div>
+            <div class="top-winners-tab" data-period="15dias" onclick="setTopWinnersPeriod('15dias')">15 Dias</div>
+            <div class="top-winners-tab" data-period="30dias" onclick="setTopWinnersPeriod('30dias')">30 Dias</div>
         </div>
     </div>
 
@@ -41,44 +65,46 @@
             <p>Top Ganhos</p>
         </div>
         <div class="top-winners-scroll">
-            <div class="top-winners-track">
-                @foreach($mockWinners as $winner)
-                    <div class="top-winner-card">
-                        <div class="top-winner-game-img">
-                            <img src="{{ $winner['image'] }}" alt="{{ $winner['game'] }}">
-                        </div>
-                        <div class="top-winner-info">
-                            <div class="top-winner-player">
-                                <div class="top-winner-avatar">
-                                    <img class="avatar-roll" src="https://cdn.7games.bet.br/content/assets/rodela.svg">
-                                    <img class="avatar-img" src="https://cdn.7games.bet/content/images/avatars/v2/{{ $winner['avatar'] }}.webp">
-                                </div>
-                                <p class="player-name">{{ $winner['name'] }}</p>
+            @foreach(['hoje','3dias','7dias','15dias','30dias'] as $idx => $period)
+                <div class="top-winners-track" id="top-winners-track-{{ $period }}" style="display: {{ $period == 'hoje' ? 'flex' : 'none' }};">
+                    @php
+                        $names = $periods[$period]['names'];
+                        $min = $periods[$period]['min'];
+                        $max = $periods[$period]['max'];
+                        $games = $periodGames[$period] ?? $topGames;
+                        $count = min(count($games), count($names));
+                        $mockWinners = [];
+                        for ($i = 0; $i < $count; $i++) {
+                            $game = $games[$i % count($games)];
+                            $mockWinners[] = [
+                                'name' => $names[$i % count($names)],
+                                'game' => $game->name,
+                                'amount' => 'R$ ' . number_format(rand($min, $max), 2, ',', '.'),
+                                'image' => str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image),
+                                'avatar' => $avatars[array_rand($avatars)]
+                            ];
+                        }
+                    @endphp
+                    @foreach($mockWinners as $winner)
+                        <div class="top-winner-card">
+                            <div class="top-winner-game-img">
+                                <img src="{{ $winner['image'] }}" alt="{{ $winner['game'] }}">
                             </div>
-                            <span class="game-name">{{ $winner['game'] }}</span>
-                            <p class="winner-amount">{{ $winner['amount'] }}</p>
-                        </div>
-                    </div>
-                @endforeach
-                @foreach($mockWinners as $winner)
-                    <div class="top-winner-card">
-                        <div class="top-winner-game-img">
-                            <img src="{{ $winner['image'] }}" alt="{{ $winner['game'] }}">
-                        </div>
-                        <div class="top-winner-info">
-                            <div class="top-winner-player">
-                                <div class="top-winner-avatar">
-                                    <img class="avatar-roll" src="https://cdn.7games.bet.br/content/assets/rodela.svg">
-                                    <img class="avatar-img" src="https://cdn.7games.bet/content/images/avatars/v2/{{ $winner['avatar'] }}.webp">
+                            <div class="top-winner-info">
+                                <div class="top-winner-player">
+                                    <div class="top-winner-avatar">
+                                        <img class="avatar-roll" src="https://cdn.7games.bet.br/content/assets/rodela.svg">
+                                        <img class="avatar-img" src="https://cdn.7games.bet/content/images/avatars/v2/{{ $winner['avatar'] }}.webp">
+                                    </div>
+                                    <p class="player-name">{{ $winner['name'] }}</p>
                                 </div>
-                                <p class="player-name">{{ $winner['name'] }}</p>
+                                <span class="game-name">{{ $winner['game'] }}</span>
+                                <p class="winner-amount">{{ $winner['amount'] }}</p>
                             </div>
-                            <span class="game-name">{{ $winner['game'] }}</span>
-                            <p class="winner-amount">{{ $winner['amount'] }}</p>
                         </div>
-                    </div>
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
+            @endforeach
         </div>
     </div>
 </div>
