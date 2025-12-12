@@ -102,7 +102,7 @@
                     </div>
                     <br>
                 @endif
-
+    <br>
                 {{-- Categorias marcadas para home --}}
                 @if(isset($categoriesHome) && count($categoriesHome) > 0)
                     @foreach($categoriesHome as $category)
@@ -134,7 +134,7 @@
                         @endif
                     @endforeach
                 @endif
-
+                
                 <!-- Slotegrator -->
                 @if(count($games) > 0)
                     @include('includes.title', ['link' => url('/games?tab=all'), 'title' => 'Todos os Jogos'])
