@@ -207,18 +207,19 @@
                             } else {
                                 let modalHtml = `<div id="rollover-modal" class="iziModal" data-izimodal-loop="">
                                     <div class="modal-dialog">
-                                        <div class="modal-content p-4 text-center" style="background: #fff; border-radius: 1.5rem; max-width: 400px; margin: auto;">
-                                            <h4 class="mb-3" style="color: #1a1c1f;">Saque Bloqueado</h4>
-                                            <p id="rollover-modal-message" style="color: #555;">${msg}</p>
-                                            <a href="/" class="btn btn-primary w-100 mt-3" style="border-radius: 2rem; font-weight: 600;">JOGAR AGORA</a>
+                                        <div class="modal-content p-4 text-center">
+                                            <h4 class="mb-3">Saque Bloqueado</h4>
+                                            <p id="rollover-modal-message">${msg}</p>
+                                            <a href="/" class="btn btn-primary w-100 mt-3">JOGAR AGORA</a>
                                         </div>
                                     </div>
                                 </div>`;
                                 $('body').append(modalHtml);
                                 $('#rollover-modal').iziModal({
-                                    headerColor: '#fff',
-                                    theme: 'light',
-                                    width: 420,
+                                    title: 'Saque Bloqueado',
+                                    headerColor: '#1A1C1F',
+                                    theme: 'dark',
+                                    width: 400,
                                     overlayClose: true,
                                     zindex: 99999
                                 });
