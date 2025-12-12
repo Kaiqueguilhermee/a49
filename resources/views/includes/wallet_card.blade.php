@@ -205,21 +205,13 @@
                                 $('#rollover-modal').iziModal('open');
                                 document.getElementById('rollover-modal-message').innerHTML = msg;
                             } else {
-                                let modalHtml = `<div id="rollover-modal" class="iziModal" data-izimodal-loop="">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content p-4 text-center">
-                                            <h4 class="mb-3">Saque Bloqueado</h4>
-                                            <p id="rollover-modal-message">${msg}</p>
-                                            <a href="/" class="btn btn-primary w-100 mt-3">JOGAR AGORA</a>
-                                        </div>
-                                    </div>
-                                </div>`;
+                                let modalHtml = `<div id=\"rollover-modal\" class=\"iziModal\" data-izimodal-loop=\"\">\n+                                    <div class=\"modal-dialog\">\n+                                        <div class=\"modal-content bg-dark text-white p-4 text-center\">\n+                                            <div class=\"mb-3\"><i class=\"fa-solid fa-money-from-bracket fa-2x\"></i></div>\n+                                            <div id=\"rollover-modal-message\" class=\"mb-3\">${msg}</div>\n+                                            <a href=\"/\" class=\"btn btn-success w-100\">JOGAR AGORA</a>\n+                                        </div>\n+                                    </div>\n+                                </div>`;
                                 $('body').append(modalHtml);
                                 $('#rollover-modal').iziModal({
                                     title: 'Saque Bloqueado',
                                     headerColor: '#1A1C1F',
                                     theme: 'dark',
-                                    width: 400,
+                                    width: 700,
                                     overlayClose: true,
                                     zindex: 99999
                                 });
