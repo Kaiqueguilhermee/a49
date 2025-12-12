@@ -92,11 +92,7 @@
                 <!-- TopTrend Gaming - Jogos em Destaque -->
                 @if(isset($topTrendGames) && count($topTrendGames) > 0)
 
-                    <!-- Apenas Mobile: Mais Pagou Hoje -->
-                    <div class="page-view-more block md:hidden flex items-center justify-between mb-2">
-                        <h3 class="view-title-more ellipsis">Mais Pagou Hoje</h3>
-                        <a class="view-see-more flex items-center gap-1" href="/pb/casino/slots/44">MAIS<i class="view-arrow-more bc-i-small-arrow-right"></i></a>
-                    </div>
+
 
                     @include('includes.title', ['link' => url('/games?tab=all'), 'title' => '+Jogados da semana', 'icon' => 'fa-duotone fa-gamepad-modern'])
 
