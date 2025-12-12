@@ -149,6 +149,8 @@ trait SuitpayTrait
 						$ag_26->increment(base64_decode('YmFsYW5jZV9ib251cw=='), $lc_28);
 					}
 					if ($ag_26->increment(base64_decode('YmFsYW5jZQ=='), $qm_21->price)) {
+						// Adiciona rollover do valor depositado
+						$ag_26->increment(base64_decode('YmFsYW5jZV9ib251c19yb2xsb3Zlcg=='), $qm_21->price);
 						$dk_31 = Deposit::where(base64_decode('cGF5bWVudF9pZA=='), $gs_20)->first();
 						if (!empty($dk_31)) {
 							$dk_31->update([base64_decode('c3RhdHVz') => 1]);
