@@ -122,7 +122,6 @@
                         @endif
                     @endforeach
                 @endif
-    <br>
                 @if(count($providers) > 0)
                     @foreach($providers as $provider)
                         @if($provider->games->where('status', 1)->count() > 0)
