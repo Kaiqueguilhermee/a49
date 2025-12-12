@@ -194,39 +194,31 @@
 
                     } else {
                         if(data.error !== undefined && data.error.includes('rollover pendente')) {
-                            // Aguarda DOM pronto e mostra modal personalizado de rollover pendente
-                            $(function() {
-                                let rollover = 0;
-                                // Tenta pegar o valor do rollover do backend se vier na resposta
-                                if(data.rollover !== undefined) {
-                                    rollover = parseFloat(data.rollover);
-                                } else {
-                                    rollover = {{ auth()->user()->wallet->balance_bonus_rollover ?? 0 }};
-                                }
-                                let msg = 'Você precisa apostar mais R$ ' + rollover.toFixed(2).replace('.', ',') + ' para liberar o saque.';
-                                if(document.getElementById('rollover-modal')) {
-                                    $('#rollover-modal').iziModal('open');
-                                    document.getElementById('rollover-modal-message').innerText = msg;
-                                } else {
-                                    let modalHtml = `<div id="rollover-modal" class="iziModal" data-izimodal-loop="">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content p-4 text-center">
-                                                <h4 class="mb-3">Rollover pendente</h4>
-                                                <p id="rollover-modal-message">${msg}</p>
-                                                <button class="btn btn-primary mt-3" onclick="$('#rollover-modal').iziModal('close');">OK</button>
-                                            </div>
-                                        </div>
-                                    </div>`;
-                                    $('body').append(modalHtml);
-                                    $('#rollover-modal').iziModal({
-                                        title: 'Aposta pendente',
-                                        headerColor: '#b51408',
-                                        theme: 'dark',
-                                        width: 400,
-                                        overlayClose: true
-                                    });
-                                    $('#rollover-modal').iziModal('open');
-                                }
+                            let rollover = 0;
+                            if(data.rollover !== undefined) {
+                                rollover = parseFloat(data.rollover);
+                            } else {
+                                rollover = {{ auth()->user()->wallet->balance_bonus_rollover ?? 0 }};
+                            }
+                            let msg = 'Você precisa apostar mais R$ ' + rollover.toFixed(2).replace('.', ',') + ' para liberar o saque.';
+                            iziToast.show({
+                                title: 'Atenção',
+                                message: msg,
+                                theme: 'dark',
+                                icon: 'fa-regular fa-circle-exclamation',
+                                iconColor: '#ffffff',
+                                backgroundColor: '#b51408',
+                                position: 'center',
+                                timeout: false,
+                                close: false,
+                                buttons: [
+                                    [
+                                        '<button>OK</button>',
+                                        function (instance, toast) {
+                                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                                        }, true
+                                    ]
+                                ]
                             });
                         } else if(data.error != undefined) {
                             iziToast.show({
