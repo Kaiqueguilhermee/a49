@@ -36,6 +36,10 @@
 
     <!-- Lista de Ganhadores com Scroll + Top Ganhos à direita -->
     <div class="top-winners-row-flex">
+        <div class="top-winners-header side">
+            <img src="https://cdn.7games.bet.br/content/assets/trofeu2.png?q=0&lossless=1&h=32&w=32" alt="Troféu">
+            <p>Top Ganhos</p>
+        </div>
         <div class="top-winners-scroll">
             <div class="top-winners-track">
                 @foreach($mockWinners as $winner)
@@ -75,10 +79,6 @@
                     </div>
                 @endforeach
             </div>
-        </div>
-        <div class="top-winners-header side">
-            <img src="https://cdn.7games.bet.br/content/assets/trofeu2.png?q=0&lossless=1&h=32&w=32" alt="Troféu">
-            <p>Top Ganhos</p>
         </div>
     </div>
 </div>
