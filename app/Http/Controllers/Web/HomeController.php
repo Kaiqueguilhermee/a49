@@ -116,12 +116,17 @@ class HomeController extends Controller
             }
         }
 
+        $categoriesHome = Category::where('show_on_home', 1)->with(['gamesSlotgrator' => function($q) {
+            $q->where('active', 1);
+        }])->get();
+
         return view('web.home.index', [
             'games' => $games,
             'topTrendGames' => $topTrendGames,
             'providers' => $providers,
             'gamesExclusives' => $gamesExclusives,
             'gamesVibra' => $gamesVibra,
+            'categoriesHome' => $categoriesHome,
             'searchTerm' => $searchTerm
         ]);
     }
