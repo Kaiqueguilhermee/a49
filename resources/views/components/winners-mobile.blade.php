@@ -34,51 +34,51 @@
         </div>
     </div>
 
-    <!-- Header com Troféu -->
-    <div class="top-winners-header">
-        <img src="https://cdn.7games.bet.br/content/assets/trofeu2.png?q=0&lossless=1&h=32&w=32" alt="Troféu">
-        <p>Top Ganhos</p>
-    </div>
-
-    <!-- Lista de Ganhadores com Scroll -->
-    <div class="top-winners-scroll">
-        <div class="top-winners-track">
-            @foreach($mockWinners as $winner)
-                <div class="top-winner-card">
-                    <div class="top-winner-info">
-                        <div class="top-winner-player">
-                            <div class="top-winner-avatar">
-                                <img class="avatar-roll" src="https://cdn.7games.bet.br/content/assets/rodela.svg">
-                                <img class="avatar-img" src="https://cdn.7games.bet/content/images/avatars/v2/{{ $winner['avatar'] }}.webp">
-                            </div>
-                            <p class="player-name">{{ $winner['name'] }}</p>
+    <!-- Lista de Ganhadores com Scroll + Top Ganhos à direita -->
+    <div class="top-winners-row-flex">
+        <div class="top-winners-scroll">
+            <div class="top-winners-track">
+                @foreach($mockWinners as $winner)
+                    <div class="top-winner-card">
+                        <div class="top-winner-game-img">
+                            <img src="{{ $winner['image'] }}" alt="{{ $winner['game'] }}">
                         </div>
-                        <span class="game-name">{{ $winner['game'] }}</span>
-                        <p class="winner-amount">{{ $winner['amount'] }}</p>
-                    </div>
-                    <div class="top-winner-game-img">
-                        <img src="{{ $winner['image'] }}" alt="{{ $winner['game'] }}">
-                    </div>
-                </div>
-            @endforeach
-            @foreach($mockWinners as $winner)
-                <div class="top-winner-card">
-                    <div class="top-winner-info">
-                        <div class="top-winner-player">
-                            <div class="top-winner-avatar">
-                                <img class="avatar-roll" src="https://cdn.7games.bet.br/content/assets/rodela.svg">
-                                <img class="avatar-img" src="https://cdn.7games.bet/content/images/avatars/v2/{{ $winner['avatar'] }}.webp">
+                        <div class="top-winner-info">
+                            <div class="top-winner-player">
+                                <div class="top-winner-avatar">
+                                    <img class="avatar-roll" src="https://cdn.7games.bet.br/content/assets/rodela.svg">
+                                    <img class="avatar-img" src="https://cdn.7games.bet/content/images/avatars/v2/{{ $winner['avatar'] }}.webp">
+                                </div>
+                                <p class="player-name">{{ $winner['name'] }}</p>
                             </div>
-                            <p class="player-name">{{ $winner['name'] }}</p>
+                            <span class="game-name">{{ $winner['game'] }}</span>
+                            <p class="winner-amount">{{ $winner['amount'] }}</p>
                         </div>
-                        <span class="game-name">{{ $winner['game'] }}</span>
-                        <p class="winner-amount">{{ $winner['amount'] }}</p>
                     </div>
-                    <div class="top-winner-game-img">
-                        <img src="{{ $winner['image'] }}" alt="{{ $winner['game'] }}">
+                @endforeach
+                @foreach($mockWinners as $winner)
+                    <div class="top-winner-card">
+                        <div class="top-winner-game-img">
+                            <img src="{{ $winner['image'] }}" alt="{{ $winner['game'] }}">
+                        </div>
+                        <div class="top-winner-info">
+                            <div class="top-winner-player">
+                                <div class="top-winner-avatar">
+                                    <img class="avatar-roll" src="https://cdn.7games.bet.br/content/assets/rodela.svg">
+                                    <img class="avatar-img" src="https://cdn.7games.bet/content/images/avatars/v2/{{ $winner['avatar'] }}.webp">
+                                </div>
+                                <p class="player-name">{{ $winner['name'] }}</p>
+                            </div>
+                            <span class="game-name">{{ $winner['game'] }}</span>
+                            <p class="winner-amount">{{ $winner['amount'] }}</p>
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
+        </div>
+        <div class="top-winners-header side">
+            <img src="https://cdn.7games.bet.br/content/assets/trofeu2.png?q=0&lossless=1&h=32&w=32" alt="Troféu">
+            <p>Top Ganhos</p>
         </div>
     </div>
 </div>

@@ -184,12 +184,21 @@
     text-transform: uppercase;
 }
 
+/* Flex row para ganhadores + Top Ganhos ao lado */
+.top-winners-row-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+}
+
 .top-winners-scroll {
     overflow: hidden;
     overflow-x: auto;
     overflow-y: hidden;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
+    flex: 1;
 }
 
 .top-winners-scroll::-webkit-scrollbar {
@@ -230,24 +239,55 @@
     overflow: hidden;
 }
 
-.top-winner-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
 .top-winner-game-img {
     width: 70px;
     height: 70px;
     flex-shrink: 0;
     overflow: hidden;
     border-radius: 8px;
+    margin-right: 0;
 }
 
 .top-winner-game-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.top-winner-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Top Ganhos ao lado direito */
+.top-winners-header.side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.15) 0%, transparent 100%);
+    border-radius: 12px;
+    padding: 16px 10px;
+    min-width: 90px;
+    max-width: 110px;
+    height: 100%;
+}
+
+.top-winners-header.side img {
+    width: 32px;
+    height: 32px;
+}
+
+.top-winners-header.side p {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #FFD700;
+    text-transform: uppercase;
+    text-align: center;
 }
 
 .top-winner-player {
