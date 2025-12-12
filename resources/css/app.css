@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+/* Bootstrap Compatibility - Preserve Bootstrap Components */
+.accordion,
+.accordion-item,
+.accordion-header,
+.accordion-button,
+.accordion-body,
+.accordion-collapse {
+    all: revert;
+}
+
 /* Custom Components */
 .game-card {
     position: relative;
