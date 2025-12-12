@@ -5,11 +5,11 @@
 @layer components {
     /* Custom Components */
     .game-card {
-        @apply relative overflow-hidden rounded-3 transition-all duration-300 hover:shadow-card-hover hover:scale-105;
+        @apply relative overflow-hidden rounded-xl transition-all duration-300 hover:shadow-lg hover:scale-105;
     }
     
     .game-card-image {
-        @apply w-full h-auto rounded-3;
+        @apply w-full h-auto rounded-xl;
     }
     
     .section-header {
