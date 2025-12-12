@@ -216,7 +216,6 @@
                                 </div>`;
                                 $('body').append(modalHtml);
                                 $('#rollover-modal').iziModal({
-                                    title: false,
                                     headerColor: '#fff',
                                     theme: 'light',
                                     width: 420,
