@@ -73,12 +73,13 @@ function setTopWinnersPeriod(period) {
                         $min = $periods[$period]['min'];
                         $max = $periods[$period]['max'];
                         $games = $periodGames[$period] ?? $topGames;
-                        $count = min(count($games), count($names));
+                        $count = 8;
                         $mockWinners = [];
                         for ($i = 0; $i < $count; $i++) {
-                            $game = $games[$i % count($games)];
+                            $name = $names[array_rand($names)];
+                            $game = $games[array_rand($games)];
                             $mockWinners[] = [
-                                'name' => $names[$i % count($names)],
+                                'name' => $name,
                                 'game' => $game->name,
                                 'amount' => 'R$ ' . number_format(rand($min, $max), 2, ',', '.'),
                                 'image' => str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image),
