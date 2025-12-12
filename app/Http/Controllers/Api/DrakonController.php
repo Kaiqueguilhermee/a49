@@ -1,3 +1,22 @@
+    /**
+     * Lógica de rollover para ganhos Drakon
+     */
+    private function payWithRolloverDrakon($wallet, $WinAmount)
+    {
+        // Se tem rollover pendente, desconta do rollover e credita no bônus
+        if($wallet->balance_bonus_rollover > 0) {
+            if($wallet->balance_bonus_rollover >= $WinAmount) {
+                $wallet->decrement('balance_bonus_rollover', $WinAmount);
+            } else {
+                $wallet->update(['balance_bonus_rollover' => 0]);
+            }
+            $wallet->increment('balance_bonus', $WinAmount);
+        } else {
+            // Se não tem rollover, credita direto no saldo normal
+            $wallet->increment('balance', $WinAmount);
+        }
+        $wallet->refresh();
+    }
 <?php
 
 namespace App\Http\Controllers\Api;
@@ -489,10 +508,9 @@ class DrakonController extends Controller
             return response()->json(['status' => 0, 'balance' => '0.00'], 200);
         }
 
-        // Credit to balance
+        // Credit to balance ou bônus com rollover
         if ($win > 0) {
-            $wallet->increment('balance', $win);
-            $wallet->refresh();
+            $this->payWithRolloverDrakon($wallet, $win);
         }
 
         // Create order record

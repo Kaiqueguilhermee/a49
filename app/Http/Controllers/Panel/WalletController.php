@@ -62,7 +62,16 @@ class WalletController extends Controller
      */
     public function generateDeposit(Request $request)
     {
-        dd($request->all());
+        $user = auth()->user();
+        $amount = floatval($request->amount);
+
+        if ($amount > 0 && $user && $user->wallet) {
+            $user->wallet->increment('balance', $amount);
+            // Aqui você pode adicionar lógica de notificação, registro, etc.
+            return response()->json(['status' => true, 'message' => 'Depósito realizado com sucesso!']);
+        }
+
+        return response()->json(['status' => false, 'error' => 'Valor inválido ou usuário não encontrado.']);
     }
 
     /**
