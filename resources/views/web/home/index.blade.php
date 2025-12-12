@@ -100,7 +100,6 @@
                     </div>
 
                     <br>
-                    <br>
                 @endif
 
                 @if(count($providers) > 0)
