@@ -90,11 +90,11 @@
 
                 <!-- TopTrend Gaming - Jogos em Destaque -->
                 @if(isset($topTrendGames) && count($topTrendGames) > 0)
-                    @include('includes.title', ['link' => url('/games?tab=all'), 'title' => '+Jogados Da Semana', 'icon' => 'fa-duotone fa-gamepad-modern'])
+                    @include('includes.title', ['link' => url('/games?tab=all'), 'title' => '+Jogados da semana', 'icon' => 'fa-duotone fa-gamepad-modern'])
 
-                    <div class="grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
+                    <div class="flex gap-3 mt-4 overflow-x-auto hide-scrollbar pb-2" style="scroll-snap-type: x mandatory;">
                         @foreach($topTrendGames as $game)
-                            <a href="{{ route('web.play', ['uuid' => $game->uuid]) }}" class="game-card">
+                            <a href="{{ route('web.play', ['uuid' => $game->uuid]) }}" class="game-card flex-shrink-0" style="width: 150px; scroll-snap-align: start;">
                                 <img src="{{ str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="game-card-image">
                             </a>
                         @endforeach
