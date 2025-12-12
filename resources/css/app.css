@@ -1,12 +1,16 @@
 @import "tailwindcss";
 
-/* Bootstrap Compatibility - Preserve Bootstrap Components */
-.accordion * {
-    all: revert !important;
-}
-
-.accordion {
-    all: revert !important;
+/* Bootstrap Compatibility - Exclude accordion from Tailwind reset */
+@layer base {
+    .accordion,
+    .accordion *,
+    .accordion-item,
+    .accordion-header,
+    .accordion-button,
+    .accordion-body,
+    .accordion-collapse {
+        all: revert;
+    }
 }
 
 /* Custom Components */
