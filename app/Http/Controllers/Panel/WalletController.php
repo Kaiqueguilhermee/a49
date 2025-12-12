@@ -28,9 +28,6 @@ class WalletController extends Controller
      */
     public function viewWithdrawals(Request $request)
     {
-        if (auth()->user()->wallet->balance_bonus_rollover > 0) {
-            return view('panel.wallet.withdrawal_blocked');
-        }
         $withdrawals = Withdrawal::whereUserId(auth()->id())->latest()->paginate();
         return view('panel.wallet.withdrawal', compact(['withdrawals']));
     }
