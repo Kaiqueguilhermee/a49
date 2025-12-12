@@ -36,6 +36,8 @@
         <!-- Main Css -->
         <link href="{{ asset('assets/css/style.css?v=' . time()) }}" rel="stylesheet" type="text/css" id="theme-opt" />
 
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+
         @stack('styles')
 
         <!-- Google tag (gtag.js) -->
