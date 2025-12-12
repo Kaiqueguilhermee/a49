@@ -94,8 +94,11 @@
         display: flex !important;
         flex-wrap: nowrap !important;
         overflow-x: auto !important;
+        overflow-y: hidden !important;
         scroll-snap-type: x mandatory;
         gap: 0.75rem;
+        touch-action: pan-x;
+        align-items: flex-start;
     }
     
     .scroll-mobile .game-card {
