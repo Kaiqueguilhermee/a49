@@ -162,8 +162,6 @@
                     </div>
                 @endif
 
-                <br>
-
                 @if(count($gamesVibra) > 0)
                     @include('includes.title', ['link' => url('/games?tab=vibra'), 'title' => 'Jogos Vibra'])
 
