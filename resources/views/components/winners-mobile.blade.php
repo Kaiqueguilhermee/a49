@@ -25,11 +25,11 @@
     ];
     $topGamesArr = is_array($topGames) ? $topGames : $topGames->all();
     $periodGames = [
-        'hoje' => array_slice($topGamesArr, 0, 8),
-        '3dias' => array_slice($topGamesArr, 8, 8),
-        '7dias' => array_slice($topGamesArr, 16, 8),
-        '15dias' => array_slice($topGamesArr, 24, 8),
-        '30dias' => array_slice($topGamesArr, 32, 8),
+        'hoje' => count($topGamesArr) >= 8 ? array_slice($topGamesArr, 0, 8) : $topGamesArr,
+        '3dias' => count($topGamesArr) >= 16 ? array_slice($topGamesArr, 8, 8) : $topGamesArr,
+        '7dias' => count($topGamesArr) >= 24 ? array_slice($topGamesArr, 16, 8) : $topGamesArr,
+        '15dias' => count($topGamesArr) >= 32 ? array_slice($topGamesArr, 24, 8) : $topGamesArr,
+        '30dias' => count($topGamesArr) >= 40 ? array_slice($topGamesArr, 32, 8) : $topGamesArr,
     ];
 @endphp
 <script>
