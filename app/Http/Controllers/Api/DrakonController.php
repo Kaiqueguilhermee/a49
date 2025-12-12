@@ -14,26 +14,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class DrakonController extends Controller
-{
-    /**
-     * Lógica de rollover para ganhos Drakon
-     */
-    private function payWithRolloverDrakon($wallet, $WinAmount)
-    {
-        // Se tem rollover pendente, desconta do rollover e credita no bônus
-        if($wallet->balance_bonus_rollover > 0) {
-            if($wallet->balance_bonus_rollover >= $WinAmount) {
-                $wallet->decrement('balance_bonus_rollover', $WinAmount);
-            } else {
-                $wallet->update(['balance_bonus_rollover' => 0]);
-            }
-            $wallet->increment('balance_bonus', $WinAmount);
-        } else {
-            // Se não tem rollover, credita direto no saldo normal
-            $wallet->increment('balance', $WinAmount);
-        }
-        $wallet->refresh();
-    }
 
 namespace App\Http\Controllers\Api;
 
