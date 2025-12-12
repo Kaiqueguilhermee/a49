@@ -83,16 +83,25 @@
 
 /* Mobile Optimizations */
 @media (max-width: 768px) {
-    .mobile-cols-2 > * {
-        flex: 0 0 50% !important;
-        max-width: 50% !important;
+    .scroll-mobile {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory;
+        gap: 0.75rem;
     }
     
-    .hide-scrollbar::-webkit-scrollbar {
+    .scroll-mobile .game-card {
+        flex-shrink: 0;
+        width: 150px;
+        scroll-snap-align: start;
+    }
+    
+    .scroll-mobile::-webkit-scrollbar {
         display: none;
     }
     
-    .hide-scrollbar {
+    .scroll-mobile {
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
