@@ -61,6 +61,8 @@
                     </div>
                 </form>
 
+                <!-- Últimos Ganhos -->
+                @include('components.last-winners')
 
                 <!-- Jogos da plataforma -->
                 @if(count($gamesExclusives) > 0)
