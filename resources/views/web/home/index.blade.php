@@ -102,7 +102,6 @@
                     </div>
                     <br>
                 @endif
-    <br>
                 {{-- Categorias marcadas para home --}}
                 @if(isset($categoriesHome) && count($categoriesHome) > 0)
                     @foreach($categoriesHome as $category)
@@ -118,7 +117,7 @@
                         @endif
                     @endforeach
                 @endif
-
+    <br>
                 @if(count($providers) > 0)
                     @foreach($providers as $provider)
                         @if($provider->games->where('status', 1)->count() > 0)
