@@ -55,23 +55,7 @@
                 </li>
             @endif
 
-            @if(\App\Models\Category::count() > 0)
-                <li class="nav-item has-submenu">
-                    <a class="nav-link nav-menu" href="#">
-                        CATEGORIAS
-                        <i class="fas fa-chevron-up nav-link-menu-icon"></i>
-                    </a>
-                    <ul class="submenu collapse show">
-                        @foreach(\App\Models\Category::all() as $category)
-                            <li>
-                                <a class="nav-link" href="{{ route('web.category.index', ['slug' => $category->slug]) }}">
-                                    {{ $category->name }}
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </li>
-            @endif
+            {{-- Categoria removida do menu --}}
         </ul>
     </div>
 </nav>
