@@ -54,6 +54,7 @@
                 </section>
 
                 <!-- Search -->
+                 <br>
                 <form action="{{ url('/') }}" method="GET" class="mb-6">
                     <div class="relative">
                         <input type="text" name="search" value="{{ request('search') }}" class="search-input w-full pl-4 pr-12" placeholder="Digite o que você procura..." aria-label="Pesquisar">
