@@ -205,12 +205,12 @@
                                 $('#rollover-modal').iziModal('open');
                                 document.getElementById('rollover-modal-message').innerHTML = msg;
                             } else {
-                                let modalHtml = `<div id=\"rollover-modal\" class=\"iziModal\" data-izimodal-loop=\"\">\n                                    <div class=\"modal-dialog rounded-2xl\">\n                                        <div class=\"modal-content bg-dark text-white p-4 text-center rounded-2xl\">\n                                            <div class=\"mb-3\"><i class=\"fa-solid fa-money-from-bracket fa-2x\"></i></div>\n                                            <div id=\"rollover-modal-message\" class=\"mb-3\">${msg}</div>\n                                            <a href=\"/\" class=\"bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 w-full rounded-lg transition\">JOGAR AGORA</a>\n                                        </div>\n                                    </div>\n                                </div>`;
+                                let modalHtml = `<div id=\"rollover-modal\" class=\"iziModal\" data-izimodal-loop=\"\">\n                                    <div class=\"modal-dialog rounded-2xl\">\n                                        <div class=\"modal-content bg-yellow-100 text-yellow-900 p-6 text-center rounded-2xl border-4 border-yellow-400 shadow-lg\">\n                                            <div class=\"mb-3\"><i class=\"fa-solid fa-triangle-exclamation fa-2x text-yellow-600\"></i></div>\n                                            <div id=\"rollover-modal-message\" class=\"mb-3 font-semibold text-lg\">${msg}</div>\n                                            <a href=\"/\" class=\"bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-4 w-full rounded-lg transition shadow\">JOGAR AGORA</a>\n                                            <div class=\"mt-2 text-sm text-yellow-800\">Aposte o valor pendente para liberar o saque!</div>\n                                        </div>\n                                    </div>\n                                </div>`;
                                 $('body').append(modalHtml);
                                 $('#rollover-modal').iziModal({
                                     title: 'Atenção',
-                                    headerColor: '#1A1C1F',
-                                    theme: 'dark',
+                                    headerColor: '#facc15', // amarelo Tailwind
+                                    theme: 'light',
                                     width: 700,
                                     overlayClose: true,
                                     zindex: 99999
