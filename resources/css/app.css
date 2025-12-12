@@ -105,4 +105,18 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
+    
+    /* "MAIS PAGOU HOJE" styling for mobile */
+    .mobile-paid-today {
+        margin-left: 7px;
+        border-radius: 12px;
+        background: linear-gradient(90deg, rgba(54, 212, 126, 0.25) 0%, rgba(54, 212, 126, 0.00) 100%);
+        padding: 8px 12px;
+    }
+    
+    .mobile-paid-today h4 {
+        font-weight: 700;
+        color: #36d47e;
+        text-transform: uppercase;
+    }
 }
