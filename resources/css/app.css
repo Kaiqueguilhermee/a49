@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    /* Custom Components */
+    .game-card {
+        @apply relative overflow-hidden rounded-3 transition-all duration-300 hover:shadow-card-hover hover:scale-105;
+    }
+    
+    .game-card-image {
+        @apply w-full h-auto rounded-3;
+    }
+    
+    .section-header {
+        @apply flex items-center justify-between mb-4 px-1;
+    }
+    
+    .section-title {
+        @apply flex items-center gap-3 text-white font-semibold text-lg;
+    }
+    
+    .section-icon {
+        @apply text-primary text-2xl;
+    }
+    
+    .section-link {
+        @apply text-primary hover:text-primary-light transition-colors duration-200 flex items-center gap-2 text-sm;
+    }
+    
+    /* Search Bar */
+    .search-input {
+        @apply w-full bg-dark-light text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition-all;
+    }
+    
+    /* Banner */
+    .banner-promo {
+        @apply absolute top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-accent-gold to-accent-orange text-black px-6 py-2 rounded-full font-bold text-sm z-10 shadow-lg;
+    }
+}
+
+@layer utilities {
+    /* Mobile Optimizations */
+    @media (max-width: 768px) {
+        .mobile-cols-2 > * {
+            flex: 0 0 50% !important;
+            max-width: 50% !important;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    }
+}
