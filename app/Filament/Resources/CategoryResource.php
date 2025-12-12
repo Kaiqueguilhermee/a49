@@ -17,15 +17,11 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-squares-plus';
-
-    protected static ?string $navigationLabel = 'Categorias';
-
-    protected static ?string $modelLabel = 'Categorias';
-
-    protected static ?string $navigationGroup = 'Meus Jogos';
-
-    protected static ?int $navigationSort = 1;
+    protected static ?string $navigationIcon = null;
+    protected static ?string $navigationLabel = null;
+    protected static ?string $modelLabel = null;
+    protected static ?string $navigationGroup = null;
+    protected static ?int $navigationSort = null;
 
     /**
      * @param Form $form
