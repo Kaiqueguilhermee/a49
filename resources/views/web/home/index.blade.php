@@ -103,7 +103,6 @@
                     </div>
                     <br>
                 @endif
-                    <br>
                 {{-- Categorias marcadas para home --}}
                 @if(isset($categoriesHome) && count($categoriesHome) > 0)
                     @foreach($categoriesHome as $category)
