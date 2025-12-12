@@ -186,12 +186,21 @@
 
 .top-winners-scroll {
     overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.top-winners-scroll::-webkit-scrollbar {
+    display: none;
 }
 
 .top-winners-track {
     display: flex;
     gap: 12px;
     animation: scrollTopWinners 60s linear infinite;
+    will-change: transform;
 }
 
 .top-winners-track:hover {
@@ -209,27 +218,36 @@
 
 .top-winner-card {
     flex-shrink: 0;
-    width: 180px;
+    width: 240px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(101, 203, 36, 0.2);
     border-radius: 12px;
+    padding: 10px;
     overflow: hidden;
 }
 
+.top-winner-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
 .top-winner-game-img {
-    width: 100%;
-    height: 100px;
+    width: 70px;
+    height: 70px;
+    flex-shrink: 0;
     overflow: hidden;
+    border-radius: 8px;
 }
 
 .top-winner-game-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.top-winner-info {
-    padding: 10px;
 }
 
 .top-winner-player {

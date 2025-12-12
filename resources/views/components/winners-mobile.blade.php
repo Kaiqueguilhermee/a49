@@ -45,9 +45,6 @@
         <div class="top-winners-track">
             @foreach($mockWinners as $winner)
                 <div class="top-winner-card">
-                    <div class="top-winner-game-img">
-                        <img src="{{ $winner['image'] }}" alt="{{ $winner['game'] }}">
-                    </div>
                     <div class="top-winner-info">
                         <div class="top-winner-player">
                             <div class="top-winner-avatar">
@@ -58,14 +55,14 @@
                         </div>
                         <span class="game-name">{{ $winner['game'] }}</span>
                         <p class="winner-amount">{{ $winner['amount'] }}</p>
+                    </div>
+                    <div class="top-winner-game-img">
+                        <img src="{{ $winner['image'] }}" alt="{{ $winner['game'] }}">
                     </div>
                 </div>
             @endforeach
             @foreach($mockWinners as $winner)
                 <div class="top-winner-card">
-                    <div class="top-winner-game-img">
-                        <img src="{{ $winner['image'] }}" alt="{{ $winner['game'] }}">
-                    </div>
                     <div class="top-winner-info">
                         <div class="top-winner-player">
                             <div class="top-winner-avatar">
@@ -76,6 +73,9 @@
                         </div>
                         <span class="game-name">{{ $winner['game'] }}</span>
                         <p class="winner-amount">{{ $winner['amount'] }}</p>
+                    </div>
+                    <div class="top-winner-game-img">
+                        <img src="{{ $winner['image'] }}" alt="{{ $winner['game'] }}">
                     </div>
                 </div>
             @endforeach
