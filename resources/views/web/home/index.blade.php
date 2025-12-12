@@ -89,8 +89,6 @@
                     </div>
                 @endif
 
-                <br>
-
                 <!-- TopTrend Gaming - Jogos em Destaque -->
                 @if(isset($topTrendGames) && count($topTrendGames) > 0)
                     @include('includes.title', ['link' => url('/games?tab=all'), 'title' => '+Jogados da semana', 'icon' => 'fa-duotone fa-gamepad-modern'])
