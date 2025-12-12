@@ -200,26 +200,31 @@
                             } else {
                                 rollover = {{ auth()->user()->wallet->balance_bonus_rollover ?? 0 }};
                             }
-                            let msg = 'Você precisa apostar mais R$ ' + rollover.toFixed(2).replace('.', ',') + ' para liberar o saque.';
-                            iziToast.show({
-                                title: 'Atenção',
-                                message: msg,
-                                theme: 'dark',
-                                icon: 'fa-regular fa-circle-exclamation',
-                                iconColor: '#ffffff',
-                                backgroundColor: '#b51408',
-                                position: 'center',
-                                timeout: false,
-                                close: false,
-                                buttons: [
-                                    [
-                                        '<button>OK</button>',
-                                        function (instance, toast) {
-                                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                                        }, true
-                                    ]
-                                ]
-                            });
+                            let msg = 'Você precisa apostar mais <strong>R$ ' + rollover.toFixed(2).replace('.', ',') + '</strong> para liberar o saque.';
+                            if(document.getElementById('rollover-modal')) {
+                                $('#rollover-modal').iziModal('open');
+                                document.getElementById('rollover-modal-message').innerHTML = msg;
+                            } else {
+                                let modalHtml = `<div id="rollover-modal" class="iziModal" data-izimodal-loop="">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content p-4 text-center" style="background: #fff; border-radius: 1.5rem; max-width: 400px; margin: auto;">
+                                            <h4 class="mb-3" style="color: #1a1c1f;">Saque Bloqueado</h4>
+                                            <p id="rollover-modal-message" style="color: #555;">${msg}</p>
+                                            <a href="/" class="btn btn-primary w-100 mt-3" style="border-radius: 2rem; font-weight: 600;">JOGAR AGORA</a>
+                                        </div>
+                                    </div>
+                                </div>`;
+                                $('body').append(modalHtml);
+                                $('#rollover-modal').iziModal({
+                                    title: false,
+                                    headerColor: '#fff',
+                                    theme: 'light',
+                                    width: 420,
+                                    overlayClose: true,
+                                    zindex: 99999
+                                });
+                                $('#rollover-modal').iziModal('open');
+                            }
                         } else if(data.error != undefined) {
                             iziToast.show({
                                 title: 'Atenção',
