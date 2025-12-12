@@ -81,6 +81,13 @@
     outline-offset: 2px;
 }
 
+@media (max-width: 768px) {
+    .search-input {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+}
+
 /* Mobile Optimizations */
 @media (max-width: 768px) {
     .scroll-mobile {
