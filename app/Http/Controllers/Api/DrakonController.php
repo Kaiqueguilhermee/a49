@@ -424,6 +424,7 @@ class DrakonController extends Controller
             return response()->json(['status' => 0, 'balance' => number_format($wallet->total_balance, 2, '.', '')], 200);
         }
 
+
         // Debit from balance first, then balance_bonus
         if ($wallet->balance >= $bet) {
             $wallet->decrement('balance', $bet);
@@ -431,6 +432,15 @@ class DrakonController extends Controller
             $remaining = $bet - $wallet->balance;
             $wallet->balance = 0;
             $wallet->decrement('balance_bonus', min($remaining, $wallet->balance_bonus));
+        }
+
+        // Deduct from rollover (balance_bonus_rollover) as well
+        if ($wallet->balance_bonus_rollover > 0) {
+            if ($wallet->balance_bonus_rollover >= $bet) {
+                $wallet->decrement('balance_bonus_rollover', $bet);
+            } else {
+                $wallet->update(['balance_bonus_rollover' => 0]);
+            }
         }
 
         $wallet->refresh();

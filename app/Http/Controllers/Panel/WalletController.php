@@ -65,8 +65,11 @@ class WalletController extends Controller
         $user = auth()->user();
         $amount = floatval($request->amount);
 
+
         if ($amount > 0 && $user && $user->wallet) {
             $user->wallet->increment('balance', $amount);
+            // Adiciona rollover do valor depositado
+            $user->wallet->increment('balance_bonus_rollover', $amount);
             // Aqui você pode adicionar lógica de notificação, registro, etc.
             return response()->json(['status' => true, 'message' => 'Depósito realizado com sucesso!']);
         }
@@ -79,6 +82,14 @@ class WalletController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function requestWithdrawal(Request $request)
+
+            // Bloquear saque se houver rollover pendente
+            if (auth()->user()->wallet->balance_bonus_rollover > 0) {
+                return response()->json([
+                    'status' => false,
+                    'error' => 'Você precisa apostar o valor do seu depósito antes de sacar (rollover pendente).'
+                ], 400);
+            }
     {
         $setting = \Helper::getSetting();
         $rules = [
