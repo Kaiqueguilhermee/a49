@@ -178,7 +178,7 @@ class HomeController extends Controller
             // Call Drakon API to launch game
             $mode = 'real';
             if (auth()->check() && auth()->user()->is_demo_agent) {
-                $mode = 'fun';
+                $mode = 'demo';
             }
             try {
                 // Step 1: Authenticate to get access_token
