@@ -176,6 +176,10 @@ class HomeController extends Controller
             $device = $isMobile ? 'mobile' : 'desktop';
 
             // Call Drakon API to launch game
+            $mode = 'real';
+            if (auth()->check() && auth()->user()->is_demo_agent) {
+                $mode = 'fun';
+            }
             try {
                 // Step 1: Authenticate to get access_token
                 $credentials = base64_encode($agentToken . ':' . $agentSecret);
@@ -233,7 +237,7 @@ class HomeController extends Controller
                     'user_id' => $userId,
                     'user_name' => $userName,
                     'device' => $device,
-                    'mode' => 'real',
+                    'mode' => $mode,
                 ]);
 
                 Log::info('Drakon game launch request', [
