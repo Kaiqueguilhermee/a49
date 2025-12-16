@@ -24,7 +24,6 @@ class DrakonController extends Controller
         $wallet->refresh();
         Log::info('payWithRolloverDrakon: valor creditado', ['user_id' => $wallet->user_id, 'valor' => $amount]);
     }
-{
     /**
      * Authenticate agent and return access_token
      */
