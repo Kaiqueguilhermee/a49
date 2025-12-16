@@ -342,22 +342,33 @@ class DrakonController extends Controller
      */
     private function handleUserBalance(Request $request)
     {
-        $userId = $request->input('user_id');
-        
-        if (empty($userId)) {
-            return response()->json(['status' => 0, 'error' => 'INVALID_PARAMS'], 400);
-        }
+        \Log::info('Drakon user_balance handler start', ['request' => $request->all()]);
+        try {
+            $userId = $request->input('user_id');
+            if (empty($userId)) {
+                \Log::warning('Drakon user_balance: user_id ausente', ['request' => $request->all()]);
+                return response()->json(['status' => 0, 'error' => 'INVALID_PARAMS'], 400);
+            }
 
-        $wallet = Wallet::where('user_id', $userId)->first();
-        
-        if (!$wallet) {
-            return response()->json(['status' => 0, 'balance' => '0.00'], 200);
-        }
+            $wallet = Wallet::where('user_id', $userId)->first();
+            if (!$wallet) {
+                \Log::warning('Drakon user_balance: carteira não encontrada', ['user_id' => $userId]);
+                return response()->json(['status' => 0, 'balance' => '0.00'], 200);
+            }
 
-        return response()->json([
-            'status' => 1,
-            'balance' => number_format($wallet->total_balance, 2, '.', '')
-        ], 200);
+            \Log::info('Drakon user_balance handler success', ['user_id' => $userId, 'balance' => $wallet->total_balance]);
+            return response()->json([
+                'status' => 1,
+                'balance' => number_format($wallet->total_balance, 2, '.', '')
+            ], 200);
+        } catch (\Throwable $e) {
+            \Log::error('Drakon user_balance exception', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'request' => $request->all()
+            ]);
+            return response()->json(['status' => false, 'error' => 'INTERNAL_ERROR'], 500);
+        }
     }
 
     /**
