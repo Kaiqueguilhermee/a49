@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class DrakonController extends Controller
+{
     /**
      * Credita valor no saldo principal do wallet (padrão para Drakon)
      */
