@@ -449,7 +449,7 @@ class DrakonController extends Controller
             'amount' => $bet,
             'providers' => 'drakon',
             'round_id' => $roundId,
-            'status' => 'completed'
+            'status' => 1
         ]);
 
         Log::info('Drakon BET processed', [
@@ -527,7 +527,7 @@ class DrakonController extends Controller
             'amount' => $win,
             'providers' => 'drakon',
             'round_id' => $roundId,
-            'status' => 'completed'
+            'status' => 1
         ]);
 
         Log::info('Drakon WIN processed', [
