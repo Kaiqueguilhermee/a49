@@ -490,67 +490,74 @@ class DrakonController extends Controller
      */
     private function handleTransactionWin(Request $request)
     {
-        $userId = $request->input('user_id');
-        $transactionId = $request->input('transaction_id');
-        $win = (float) $request->input('win');
-        $roundId = $request->input('round_id');
-        $game = $request->input('game');
+        try {
+            $userId = $request->input('user_id');
+            $transactionId = $request->input('transaction_id');
+            $win = (float) $request->input('win');
+            $roundId = $request->input('round_id');
+            $game = $request->input('game');
 
-        if (!$userId || !$transactionId) {
-            return response()->json(['status' => 0, 'balance' => '0.00'], 200);
-        }
+            if (!$userId || !$transactionId) {
+                return response()->json(['status' => 0, 'balance' => '0.00'], 200);
+            }
 
-        // Check for duplicate transaction
-        $existingOrder = Order::where('transaction_id', $transactionId)->first();
-        if ($existingOrder) {
+            // Check for duplicate transaction
+            $existingOrder = Order::where('transaction_id', $transactionId)->first();
+            if ($existingOrder) {
+                $wallet = Wallet::where('user_id', $userId)->first();
+                return response()->json([
+                    'status' => 1,
+                    'balance' => number_format($wallet->total_balance ?? 0, 2, '.', '')
+                ], 200);
+            }
+
             $wallet = Wallet::where('user_id', $userId)->first();
+            if (!$wallet) {
+                return response()->json(['status' => 0, 'balance' => '0.00'], 200);
+            }
+
+            if ($win < 0) {
+                return response()->json(['status' => 0, 'balance' => '0.00'], 200);
+            }
+
+            // Credit to balance ou bônus com rollover
+            if ($win > 0) {
+                $this->payWithRolloverDrakon($wallet, $win);
+            }
+
+            // Create order record
+            Order::create([
+                'user_id' => $userId,
+                'session_id' => $roundId ?: Str::uuid(),
+                'transaction_id' => $transactionId,
+                'game' => $game,
+                'game_uuid' => $game,
+                'type' => 'win',
+                'type_money' => 'balance',
+                'amount' => $win,
+                'providers' => 'drakon',
+                'round_id' => $roundId,
+                'status' => 1
+            ]);
+
+            Log::info('Drakon WIN processed', [
+                'user_id' => $userId,
+                'transaction_id' => $transactionId,
+                'amount' => $win,
+                'new_balance' => $wallet->total_balance
+            ]);
+
             return response()->json([
                 'status' => 1,
-                'balance' => number_format($wallet->total_balance ?? 0, 2, '.', '')
+                'balance' => number_format($wallet->total_balance, 2, '.', '')
             ], 200);
+        } catch (\Throwable $e) {
+            Log::error('Drakon WIN exception: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString(),
+                'request' => $request->all()
+            ]);
+            return response()->json(['status' => false, 'error' => 'INTERNAL_ERROR'], 500);
         }
-
-        $wallet = Wallet::where('user_id', $userId)->first();
-        
-        if (!$wallet) {
-            return response()->json(['status' => 0, 'balance' => '0.00'], 200);
-        }
-
-        if ($win < 0) {
-            return response()->json(['status' => 0, 'balance' => '0.00'], 200);
-        }
-
-        // Credit to balance ou bônus com rollover
-        if ($win > 0) {
-            $this->payWithRolloverDrakon($wallet, $win);
-        }
-
-        // Create order record
-        Order::create([
-            'user_id' => $userId,
-            'session_id' => $roundId ?: Str::uuid(),
-            'transaction_id' => $transactionId,
-            'game' => $game,
-            'game_uuid' => $game,
-            'type' => 'win',
-            'type_money' => 'balance',
-            'amount' => $win,
-            'providers' => 'drakon',
-            'round_id' => $roundId,
-            'status' => 1
-        ]);
-
-        Log::info('Drakon WIN processed', [
-            'user_id' => $userId,
-            'transaction_id' => $transactionId,
-            'amount' => $win,
-            'new_balance' => $wallet->total_balance
-        ]);
-
-        return response()->json([
-            'status' => 1,
-            'balance' => number_format($wallet->total_balance, 2, '.', '')
-        ], 200);
     }
 
     /**
