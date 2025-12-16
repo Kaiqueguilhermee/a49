@@ -20,7 +20,7 @@ class DrakonController extends Controller
     private function payWithRolloverDrakon($wallet, $amount)
     {
         // Aqui você pode adicionar lógica de rollover se necessário
-        $wallet->increment('total_balance', $amount);
+        $wallet->increment('balance', $amount);
         $wallet->refresh();
         Log::info('payWithRolloverDrakon: valor creditado', ['user_id' => $wallet->user_id, 'valor' => $amount]);
     }
@@ -549,7 +549,7 @@ class DrakonController extends Controller
 
             return response()->json([
                 'status' => 1,
-                'balance' => number_format($wallet->total_balance, 2, '.', '')
+                'balance' => number_format($wallet->balance, 2, '.', '')
             ], 200);
         } catch (\Throwable $e) {
             Log::error('Drakon WIN exception: ' . $e->getMessage(), [
