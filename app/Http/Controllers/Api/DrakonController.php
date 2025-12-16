@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class DrakonController extends Controller
+    /**
+     * Credita valor no saldo principal do wallet (padrão para Drakon)
+     */
+    private function payWithRolloverDrakon($wallet, $amount)
+    {
+        // Aqui você pode adicionar lógica de rollover se necessário
+        $wallet->increment('total_balance', $amount);
+        $wallet->refresh();
+        Log::info('payWithRolloverDrakon: valor creditado', ['user_id' => $wallet->user_id, 'valor' => $amount]);
+    }
 {
     /**
      * Authenticate agent and return access_token
