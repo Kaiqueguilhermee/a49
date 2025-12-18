@@ -875,24 +875,17 @@ a, a:hover {
     flex: 0 1 16.66%;
     padding: 0.6rem;
 }
-/* Allow vertical panning on cards so touch-start on a card doesn't block page scroll */
+/* Garante rolagem vertical nativa e clique funcional em todos os cards de jogos */
 .d-steam-card-wrapper,
-.d-steam-card {
-    touch-action: pan-y;
-    -ms-touch-action: pan-y;
-}
-/* Ensure images/anchors inside card grids allow vertical panning (mobile/WebView scroll) */
+.d-steam-card,
 .game-card,
 .game-card-image,
 .game-card img,
-.inner-loop-elementos,
-.inner-loop-elementos img,
-.caixa-loop-elementos a,
 .d-steam-cards .d-steam-card-wrapper a,
-.d-steam-card-wrapper a,
-.d-steam-card {
-    touch-action: pan-y;
-    -ms-touch-action: pan-y;
+.d-steam-card-wrapper a {
+    touch-action: pan-y !important;
+    -ms-touch-action: pan-y !important;
+    pointer-events: auto !important;
 }
 .hidden-mobile{
     display: initial;
