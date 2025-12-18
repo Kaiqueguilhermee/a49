@@ -1,5 +1,6 @@
 // touch-listener-inspect.js
 // Log every addEventListener for touch/pointer/mouse events, with stack and options.
+
 (function(){
     if (!window.location.search.includes('dbg_touch=1')) return;
     var origAdd = EventTarget.prototype.addEventListener;
@@ -13,8 +14,8 @@
             var target = this;
             var stack = '';
             try{ throw new Error(); }catch(e){ stack = e.stack; }
-            var msg = '[touch-listener-inspect] addEventListener: type='+type+' target='+((target && target.tagName)?target.tagName:target)+\
-                ' options='+JSON.stringify(options)+'\n'+stack;
+            var msg = '[touch-listener-inspect] addEventListener: type=' + type + ' target=' + ((target && target.tagName)?target.tagName:target) +
+                ' options=' + (typeof options === 'object' ? JSON.stringify(options) : String(options)) + '\n' + stack;
             if(window.console && console.info){
                 console.info(msg);
             }
