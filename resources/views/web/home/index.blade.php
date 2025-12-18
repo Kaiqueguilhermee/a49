@@ -144,14 +144,22 @@
                 @if(count($games) > 0)
                     @include('includes.title', ['link' => url('/games?tab=all'), 'title' => 'Todos os Jogos'])
 
-                    <div class="grid grid-cols-2 gap-4 mt-4 sm:grid-cols-4 lg:grid-cols-6">
+                    <div class="grid grid-cols-2 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
                         @foreach($games->take(6) as $game)
-                            @component('components.tailwind-game-card')
-                                @slot('href', route('web.play', ['uuid' => $game->uuid]))
-                                @slot('img', str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image))
-                                @slot('title', $game->name)
-                                @slot('desc', $game->provider ?? '')
-                            @endcomponent
+                            @php
+                                $service = strtolower($game->provider_service ?? $game->provider ?? '');
+                                $isDrakon = $service === 'drakon';
+                            @endphp
+
+                            @if($isDrakon)
+                                <a href="{{ route('web.play', ['uuid' => $game->uuid]) }}" class="game-card">
+                                    <img src="{{ str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="game-card-image">
+                                </a>
+                            @else
+                                <a href="{{ route('web.game.index', ['slug' => $game->slug]) }}" class="game-card">
+                                    <img src="{{ asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="game-card-image">
+                                </a>
+                            @endif
                         @endforeach
                     </div>
                 @endif
