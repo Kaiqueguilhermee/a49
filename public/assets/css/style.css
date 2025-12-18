@@ -875,6 +875,12 @@ a, a:hover {
     flex: 0 1 16.66%;
     padding: 0.6rem;
 }
+/* Allow vertical panning on cards so touch-start on a card doesn't block page scroll */
+.d-steam-card-wrapper,
+.d-steam-card {
+    touch-action: pan-y;
+    -ms-touch-action: pan-y;
+}
 .hidden-mobile{
     display: initial;
 }
