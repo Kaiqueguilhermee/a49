@@ -97,7 +97,7 @@
                 <!-- TopTrend Gaming - Jogos em Destaque -->
                 @if(isset($topTrendGames) && count($topTrendGames) > 0)
                     @include('includes.title', ['link' => url('/games?tab=all'), 'title' => 'Mais pagou Hoje'])
-                    <div class="grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6 md:grid md:grid-flow-row scroll-mobile">
+                    <div class="grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
                         @foreach($topTrendGames->take(6) as $game)
                             <a href="{{ route('web.play', ['uuid' => $game->uuid]) }}" class="game-card">
                                 <img src="{{ str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="game-card-image">
@@ -113,7 +113,7 @@
                             <div >
                                 @include('includes.title', ['link' => url('/category/'.$category->slug), 'title' => $category->name])
                             </div>
-                            <div class="scroll-mobile grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
+                            <div class="grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
                                 @foreach($category->gamesSlotgrator->take(12) as $game)
                                     <a href="{{ route('web.play', ['uuid' => $game->uuid]) }}" class="game-card">
                                         <img src="{{ str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="game-card-image">
