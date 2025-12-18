@@ -1,3 +1,7 @@
+    user-select: auto !important;
+    -webkit-user-drag: auto !important;
+    overflow: visible !important;
+    z-index: auto !important;
 
 [data-bs-theme=dark] {
     color-scheme: dark;
