@@ -881,6 +881,19 @@ a, a:hover {
     touch-action: pan-y;
     -ms-touch-action: pan-y;
 }
+/* Ensure images/anchors inside card grids allow vertical panning (mobile/WebView scroll) */
+.game-card,
+.game-card-image,
+.game-card img,
+.inner-loop-elementos,
+.inner-loop-elementos img,
+.caixa-loop-elementos a,
+.d-steam-cards .d-steam-card-wrapper a,
+.d-steam-card-wrapper a,
+.d-steam-card {
+    touch-action: pan-y;
+    -ms-touch-action: pan-y;
+}
 .hidden-mobile{
     display: initial;
 }
