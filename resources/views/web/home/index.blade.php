@@ -114,7 +114,7 @@
                                 @include('includes.title', ['link' => url('/category/'.$category->slug), 'title' => $category->name])
                             </div>
                             <div class="grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
-                                @foreach($category->gamesSlotgrator->take(12) as $game)
+                                @foreach($category->gamesSlotgrator->take(6) as $game)
                                     <a href="{{ route('web.play', ['uuid' => $game->uuid]) }}" class="game-card">
                                         <img src="{{ str_starts_with($game->image, 'http') ? $game->image : asset('storage/'.$game->image) }}" alt="{{ $game->name }}" class="game-card-image">
                                     </a>
