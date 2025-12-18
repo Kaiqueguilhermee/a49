@@ -108,7 +108,7 @@
                 @endif
                 {{-- Categorias marcadas para home --}}
                 @if(isset($categoriesHome) && count($categoriesHome) > 0)
-                    @foreach($categoriesHome as $category)
+                    @foreach($categoriesHome->take(6) as $category)
                         @if($category->gamesSlotgrator->count() > 0)
                             <div >
                                 @include('includes.title', ['link' => url('/category/'.$category->slug), 'title' => $category->name])
