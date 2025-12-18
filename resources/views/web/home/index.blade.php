@@ -73,11 +73,14 @@
                         @include('includes.title', ['link' => url('/games?tab=exclusives'), 'title' => 'Jogos da Casa'])
                     </div>
 
-                    <div class="grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-4">
                         @foreach(\App\Models\Banner::where('type', 'home')->take(6)->get() as $banner)
-                            <a href="{{ $banner->link }}" class="game-card">
-                                <img src="{{ asset('storage/'.$banner->image) }}" alt="" class="game-card-image">
-                            </a>
+                            @component('components.tailwind-game-card')
+                                @slot('href', $banner->link)
+                                @slot('img', asset('storage/'.$banner->image))
+                                @slot('title', 'Banner')
+                                @slot('desc', '')
+                            @endcomponent
                         @endforeach
                     </div>
 
