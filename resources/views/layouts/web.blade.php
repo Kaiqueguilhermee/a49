@@ -67,6 +67,7 @@
         <script src="{{ asset('assets/js/touch-allow-scroll.js') }}"></script>
         <script src="{{ asset('assets/js/steam-cards-touch.js') }}"></script>
         @if(request()->query('dbg_touch') == '1')
+            <script src="{{ asset('assets/js/touch-listener-inspect.js') }}"></script>
             <script src="{{ asset('assets/js/touch-debug.js') }}"></script>
         @endif
         <script>
