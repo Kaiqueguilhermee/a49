@@ -58,7 +58,9 @@
                 <form action="{{ url('/') }}" method="GET" class="mb-6">
                     <div class="relative">
                         <input type="text" name="search" value="{{ request('search') }}" class="search-input w-full pl-4 pr-12" placeholder="Digite o que você procura..." aria-label="Pesquisar">
-                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-primary text-xl"><i class="fa-duotone fa-magnifying-glass"></i></span>
+                        <button type="submit" class="absolute right-4 top-1/2 -translate-y-1/2 text-primary text-xl bg-transparent border-0 p-0 m-0" style="background: none; border: none;">
+                            <i class="fa-duotone fa-magnifying-glass"></i>
+                        </button>
                     </div>
                 </form>
 
