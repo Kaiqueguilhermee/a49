@@ -144,7 +144,7 @@
                 @if(count($games) > 0)
                     @include('includes.title', ['link' => url('/games?tab=all'), 'title' => 'Todos os Jogos'])
 
-                    <div class="grid grid-cols-2 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
+                    <div class="grid grid-cols-3 gap-3 mt-4 sm:grid-cols-4 lg:grid-cols-6">
                         @foreach($games->take(6) as $game)
                             @php
                                 $service = strtolower($game->provider_service ?? $game->provider ?? '');
