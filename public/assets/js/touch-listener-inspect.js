@@ -1,5 +1,5 @@
 // touch-listener-inspect.js
-// Versão ultra-simples para evitar qualquer erro de sintaxe ou codificação.
+// Versao ultra-simples para evitar qualquer erro de sintaxe ou codificacao.
 (function(){
     if (window.location.search.indexOf('dbg_touch=1') === -1) return;
     var origAdd = EventTarget.prototype.addEventListener;
