@@ -64,6 +64,7 @@
         <script src="{{ asset('assets/js/iziModal.min.js') }}"></script>
         <script src="{{ asset('assets/js/iziToast.min.js') }}"></script>
         <script src="{{ asset('assets/js/custom.js') }}"></script>
+        <script src="{{ asset('assets/js/touch-allow-scroll.js') }}"></script>
         <script src="{{ asset('assets/js/steam-cards-touch.js') }}"></script>
         @if(request()->query('dbg_touch') == '1')
             <script src="{{ asset('assets/js/touch-debug.js') }}"></script>
