@@ -3,7 +3,7 @@
     if(!isset($stories)) $stories = collect();
 @endphp
 
-<div class="stories-container block md:hidden mb-4">
+<div class="stories-container block md:hidden">
     <div class="stories-scroll" style="display:flex; gap:10px; overflow-x:auto; padding:10px;">
         @foreach($stories as $story)
             @php
