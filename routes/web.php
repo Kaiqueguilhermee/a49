@@ -55,6 +55,7 @@ Route::prefix('painel')
         include_once(__DIR__ . '/groups/panel/profile.php');
         include_once(__DIR__ . '/groups/panel/notifications.php');
         include_once(__DIR__ . '/groups/panel/affiliates.php');
+        include_once(__DIR__ . '/groups/panel/stories.php');
     });
 
 Route::middleware(['web'])

@@ -23,6 +23,13 @@
             </li>
 
             <li class="navbar_list_links">
+                <a href="{{ url('painel/stories') }}" title="Stories" class="{{ request()->routeIs('panel.stories.*') ? 'active-sidebar' : '' }}">
+                    <img src="{{ asset('/assets/images/svg/story.svg') }}" alt="" width="24">
+                    Stories
+                </a>
+            </li>
+
+            <li class="navbar_list_links">
                 <a href="{{ url('/como-funciona') }}" title="Como funciona?" class="{{ Request::is('/como-funciona') ? 'active-sidebar' : '' }}">
                     <img src="{{ asset('assets/images/svg/about.svg') }}" alt="" width="24">
                     Como funciona?

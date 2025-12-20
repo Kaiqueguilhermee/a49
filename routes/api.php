@@ -32,3 +32,12 @@ Route::get('/games/provider', [DrakonController::class, 'providers']);
 Route::match(['get', 'post'], '/drakon_api', [DrakonController::class, 'webhook']);
 Route::match(['get', 'post'], '/webhook/drakon', [DrakonController::class, 'webhook']);
 Route::match(['get', 'post'], '/drakon/webhook', [DrakonController::class, 'webhook']);
+
+// Admin external API for Stories (protected by X-Admin-Token header)
+Route::prefix('admin')->group(function () {
+    Route::get('stories', [\App\Http\Controllers\AdminApi\StoryApiController::class, 'index']);
+    Route::get('stories/{id}', [\App\Http\Controllers\AdminApi\StoryApiController::class, 'show']);
+    Route::post('stories', [\App\Http\Controllers\AdminApi\StoryApiController::class, 'store']);
+    Route::put('stories/{id}', [\App\Http\Controllers\AdminApi\StoryApiController::class, 'update']);
+    Route::delete('stories/{id}', [\App\Http\Controllers\AdminApi\StoryApiController::class, 'destroy']);
+});
