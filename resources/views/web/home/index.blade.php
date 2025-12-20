@@ -52,6 +52,10 @@
                         </ul>
                     </div>
                 </section>
+                <!-- Stories Mobile -->
+                <div class="block md:hidden mb-4">
+                    @include('web.home.sections.stories')
+                </div>
 
                 <!-- Search -->
                  <br>
@@ -64,10 +68,6 @@
                     </div>
                 </form>
 
-                <!-- Stories Mobile -->
-                <div class="block md:hidden mb-4">
-                    @include('web.home.sections.stories')
-                </div>
 
                 <!-- Ganhadores Mobile -->
                 <div class="block md:hidden mb-4">
