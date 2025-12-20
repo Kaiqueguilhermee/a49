@@ -29,6 +29,12 @@ class StoryResource extends Resource
                             ->label('Título')
                             ->maxLength(191),
 
+                        Forms\Components\FileUpload::make('cover')
+                            ->label('Capa')
+                            ->image()
+                            ->directory('stories')
+                            ->required(false),
+
                         Forms\Components\FileUpload::make('images')
                             ->label('Imagens')
                             ->image()
@@ -51,9 +57,9 @@ class StoryResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('images')
-                    ->label('Imagem')
-                    ->getStateUsing(fn($record) => is_array($record->images) && count($record->images) ? asset('storage/'.$record->images[0]) : null),
+                ImageColumn::make('cover')
+                    ->label('Capa')
+                    ->getStateUsing(fn($record) => !empty($record->cover) ? asset('storage/'.$record->cover) : (is_array($record->images) && count($record->images) ? asset('storage/'.$record->images[0]) : null)),
                 TextColumn::make('title')
                     ->searchable()
                     ->label('Título'),

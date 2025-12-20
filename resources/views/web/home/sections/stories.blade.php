@@ -6,11 +6,20 @@
 <div class="stories-container block md:hidden mb-4">
     <div class="stories-scroll" style="display:flex; gap:10px; overflow-x:auto; padding:10px;">
         @foreach($stories as $story)
-            @php $imgs = $story->images ?? []; @endphp
-            <div class="story-bubble" tabindex="0" role="button" data-images='{{ json_encode($imgs) }}' title="{{ $story->title }}" style="flex:0 0 auto; text-align:center;">
+            @php
+                $imgs = $story->images ?? [];
+                // build absolute URLs for images so JS can open them directly
+                $imgs_urls = array_map(function($u) {
+                    return str_starts_with($u, 'http') ? $u : asset('storage/'.ltrim($u, '/'));
+                }, $imgs);
+                // cover fallback
+                $cover_url = !empty($story->cover) ? (str_starts_with($story->cover, 'http') ? $story->cover : asset('storage/'.ltrim($story->cover, '/'))) : (count($imgs_urls) ? $imgs_urls[0] : null);
+            @endphp
+
+            <div class="story-bubble" tabindex="0" role="button" data-images='{{ json_encode($imgs_urls) }}' title="{{ $story->title }}" style="flex:0 0 auto; text-align:center;">
                 <div style="width:64px; height:64px; border-radius:50%; background:#eee; display:flex; align-items:center; justify-content:center; overflow:hidden; border:3px solid #ff7a59;">
-                    @if(!empty($imgs[0]))
-                        <img src="{{ str_starts_with($imgs[0],'http') ? $imgs[0] : asset('storage/'.$imgs[0]) }}" alt="{{ $story->title }}" style="width:100%; height:100%; object-fit:cover;">
+                    @if($cover_url)
+                        <img src="{{ $cover_url }}" alt="{{ $story->title }}" style="width:100%; height:100%; object-fit:cover;">
                     @else
                         <span style="font-size:24px; color:#999;">S</span>
                     @endif
@@ -64,7 +73,6 @@
             qsa('.story-bubble').forEach(function(el){
                 el.addEventListener('click', function(){
                     var imgs = JSON.parse(el.getAttribute('data-images') || '[]');
-                    imgs = imgs.map(function(u){ return (u.indexOf('http')===0)?u: ('/'+u).replace(/\/\/+/, '/'); });
                     if(imgs.length) openViewer(imgs,0);
                 });
             });
