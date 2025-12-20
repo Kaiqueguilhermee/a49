@@ -64,6 +64,11 @@
                     </div>
                 </form>
 
+                <!-- Stories Mobile -->
+                <div class="block md:hidden mb-4">
+                    @include('web.home.sections.stories')
+                </div>
+
                 <!-- Ganhadores Mobile -->
                 <div class="block md:hidden mb-4">
                     @include('components.winners-mobile')

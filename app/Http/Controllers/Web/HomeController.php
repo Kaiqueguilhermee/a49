@@ -9,6 +9,7 @@ use App\Models\FiversProvider;
 use App\Models\Game;
 use App\Models\GameExclusive;
 use App\Models\VibraCasinoGame;
+use App\Models\Story;
 use Illuminate\Http\Request;
 use App\Models\GamesKey;
 use Illuminate\Support\Facades\Log;
@@ -120,6 +121,9 @@ class HomeController extends Controller
             $q->where('active', 1);
         }])->get();
 
+        // Stories (mobile) - configurable via admin panel
+        $stories = Story::where('active', 1)->orderBy('order', 'asc')->get();
+
         return view('web.home.index', [
             'games' => $games,
             'topTrendGames' => $topTrendGames,
@@ -127,7 +131,8 @@ class HomeController extends Controller
             'gamesExclusives' => $gamesExclusives,
             'gamesVibra' => $gamesVibra,
             'categoriesHome' => $categoriesHome,
-            'searchTerm' => $searchTerm
+            'searchTerm' => $searchTerm,
+            'stories' => $stories
         ]);
     }
 
