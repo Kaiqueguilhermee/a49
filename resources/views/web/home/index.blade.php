@@ -52,7 +52,6 @@
                         </ul>
                     </div>
                 </section>
-                <br>
                 <!-- Stories Mobile -->
                 <div class="block md:hidden">
                     @include('web.home.sections.stories')
