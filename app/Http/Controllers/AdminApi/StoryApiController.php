@@ -10,11 +10,18 @@ class StoryApiController extends Controller
 {
     protected function validateToken(Request $request)
     {
-        $token = $request->header('X-Admin-Token');
-        if (empty($token) || $token !== env('EXTERNAL_ADMIN_TOKEN')) {
-            return false;
+        // Allow access if the request has an active session user (panel login).
+        if (auth()->check()) {
+            return true;
         }
-        return true;
+
+        // Fallback: allow token-based access if provided (keeps backward compatibility).
+        $token = $request->header('X-Admin-Token');
+        if (!empty($token) && $token === env('EXTERNAL_ADMIN_TOKEN')) {
+            return true;
+        }
+
+        return false;
     }
 
     public function index(Request $request)
